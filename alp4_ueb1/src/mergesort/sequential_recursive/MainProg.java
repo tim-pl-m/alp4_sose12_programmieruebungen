@@ -7,14 +7,14 @@ public class MainProg {
 	 */
 	public static void main(String[] args) {
 		
-		int[] arr = generateRandomIntArray(4); 
+		int[] arr = generateRandomIntArray(2000); 
 
 		for(int val: arr)
 		{
 			System.out.println(val);
 		}
 		
-		Sort mergeSortSeqRec = new MergeSortSeqRec();
+		Sort mergeSortSeqRec = new MergeSortParallelRec();
 		mergeSortSeqRec.sort(arr); 
 
 		System.out.println("SORTIERT:");
@@ -35,8 +35,8 @@ public class MainProg {
 		java.util.Random random = new java.util.Random();
 		for(int i = 0; i < size; i++)
 		{
-//			arr[i] = random.nextInt(Integer.MAX_VALUE);
-			arr[i] = random.nextInt(50);
+			arr[i] = random.nextInt(Integer.MAX_VALUE);
+//			arr[i] = random.nextInt(50);
 		}
 		
 		return arr; 
