@@ -2,17 +2,12 @@ package mergesort.sequential_recursive;
 
 public class MergeSortParallelRec implements Sort {
 
-	final static int MAX_THREAD_NUMBER = 5; 
-	static int used_thread_number = 0; 
+	final static int MAX_THREAD_NUMBER = 2; 
+	static Integer used_thread_number = 0; 
 	
-	synchronized static void incUsedThreadNumber()
+	synchronized static int incUsedThreadNumber()
 	{
-		used_thread_number++; 
-	}
-	
-	synchronized static int getUsedThreadNumber()
-	{
-		return used_thread_number; 
+		return used_thread_number++; 
 	}
 	
 	int[] array; 
@@ -22,6 +17,7 @@ public class MergeSortParallelRec implements Sort {
 		
 		MergeSortThread mergeSortThread = new MergeSortThread(0, array.length -1);
 		
+		incUsedThreadNumber(); 
 		Thread th = new Thread(mergeSortThread); 
 		th.start(); 
 		
@@ -59,12 +55,12 @@ public class MergeSortParallelRec implements Sort {
 			if(lower < upper)
 			{
 				Thread thLeft = null;  
-				if(getUsedThreadNumber() < MAX_THREAD_NUMBER)
+
+				if(incUsedThreadNumber() < MAX_THREAD_NUMBER)
 				{
 					MergeSortThread mergeSortThreadLeft = new MergeSortThread(lower, middle);
 					thLeft = new Thread(mergeSortThreadLeft); 
 					thLeft.start(); 
-					incUsedThreadNumber(); 
 				}
 				else
 				{
@@ -74,12 +70,11 @@ public class MergeSortParallelRec implements Sort {
 				
 				
 				Thread thRight = null;  
-				if(getUsedThreadNumber() < MAX_THREAD_NUMBER)
+				if(incUsedThreadNumber() < MAX_THREAD_NUMBER)
 				{
 					MergeSortThread mergeSortThreadRight = new MergeSortThread(middle+1, upper);
 					thRight = new Thread(mergeSortThreadRight); 
 					thRight.start(); 
-					incUsedThreadNumber(); 
 				}
 				else
 				{
