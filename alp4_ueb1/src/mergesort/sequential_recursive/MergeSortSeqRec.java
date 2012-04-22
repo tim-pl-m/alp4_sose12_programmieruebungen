@@ -20,7 +20,9 @@ public class MergeSortSeqRec implements Sort {
 	
 	private void merge(int[] array, int lower, int middle, int upper)
 	{
+		// the tmpArray is created separately with every new call of merge
 		int[] tmpArray = new int[array.length]; 
+		// also, all of the following variables are independent 
 		int left = lower; 
 		int right = middle+1;
 		int i = lower; 
