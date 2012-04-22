@@ -7,8 +7,8 @@ public class MainProg {
 	 */
 	public static void main(String[] args) {
 		
-		int[] arr = generateRandomIntArray(20); 
-
+		int[] arr = generateRandomIntArray(4000); 
+		
 		int[] arr2 = copyArray(arr); 
 		
 		for(int val: arr)
@@ -16,6 +16,8 @@ public class MainProg {
 			System.out.println(val);
 		}
 
+		
+		System.out.println("ANFANG AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
 		Sort mergeSortSeqRec = new MergeSortSeqRec();
 		mergeSortSeqRec.sort(arr); 
 
@@ -24,30 +26,33 @@ public class MainProg {
 		{
 			System.out.println(val);
 		}
-		
+		System.out.println("ENDE AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
+
 
 		Sort mergeSortParallelRec = new MergeSortParallelRec();
 		mergeSortParallelRec.sort(arr2); 
 
+		System.out.println("ANFANG AUSGABE DER PARALLEL SORTIERTEN MENGE");
 		System.out.println("SORTIERT PARALLEL:");
 		for(int val: arr2)
 		{
 			System.out.println(val);
 		}
+		System.out.println("ENDE AUSGABE DER PARALLEL SORTIERTEN MENGE");
 		
 		
-		for(int i = 0; i < arr.length; i++)
-		{
-			if(arr[i] != arr2[i])
-			{
-				System.out.println("ERGEBNISE-ARRAYS AN STELLE "+ i + " ungleich");
-			}
-
-			else
-			{
-				System.out.println("ok an stelle "+ i); 
-			}
-		}
+//		for(int i = 0; i < arr.length; i++)
+//		{
+//			if(arr[i] != arr2[i])
+//			{
+//				System.out.println("ERGEBNISE-ARRAYS AN STELLE "+ i + " ungleich");
+//			}
+//
+//			else
+//			{
+//				System.out.println("ok an stelle "+ i); 
+//			}
+//		}
 		
 	}
 	
