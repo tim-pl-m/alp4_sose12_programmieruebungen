@@ -7,38 +7,47 @@ public class MainProg {
 	 */
 	public static void main(String[] args) {
 		
-		int[] arr = generateRandomIntArray(4000); 
-		
+		int[] arr = generateRandomIntArray(400); 
 		int[] arr2 = copyArray(arr); 
 		
-		for(int val: arr)
-		{
-			System.out.println(val);
-		}
+//		for(int val: arr)
+//		{
+//			System.out.println(val);
+//		}
 
 		
-		System.out.println("ANFANG AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
 		Sort mergeSortSeqRec = new MergeSortSeqRec();
+		
+		long startTimeSeq = System.currentTimeMillis();
 		mergeSortSeqRec.sort(arr); 
+		long timeEllapsedSeq = System.currentTimeMillis() - startTimeSeq;
+		System.out.println("DAUER FÜR PARALLELE SORTIERUNG: " + timeEllapsedSeq);
+		
+		
+//		System.out.println("ANFANG AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
+//		for(int val: arr)
+//		{
+//			System.out.println(val);
+//		}
+//		System.out.println("ENDE AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
 
-		System.out.println("SORTIERT SEQUENTIELL:");
-		for(int val: arr)
-		{
-			System.out.println(val);
-		}
-		System.out.println("ENDE AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
 
-
+		
+		
 		Sort mergeSortParallelRec = new MergeSortParallelRec();
+		
+		long startTimePara = System.currentTimeMillis();
 		mergeSortParallelRec.sort(arr2); 
-
-		System.out.println("ANFANG AUSGABE DER PARALLEL SORTIERTEN MENGE");
-		System.out.println("SORTIERT PARALLEL:");
-		for(int val: arr2)
-		{
-			System.out.println(val);
-		}
-		System.out.println("ENDE AUSGABE DER PARALLEL SORTIERTEN MENGE");
+		long timeEllapsedPara = System.currentTimeMillis() - startTimePara;
+		System.out.println("DAUER FÜR PARALLELE SORTIERUNG: " + timeEllapsedPara);
+		
+		
+//		System.out.println("ANFANG AUSGABE DER PARALLEL SORTIERTEN MENGE");
+//		for(int val: arr2)
+//		{
+//			System.out.println(val);
+//		}
+//		System.out.println("ENDE AUSGABE DER PARALLEL SORTIERTEN MENGE");
 		
 		
 //		for(int i = 0; i < arr.length; i++)
