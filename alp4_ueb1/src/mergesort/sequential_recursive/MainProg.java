@@ -7,7 +7,7 @@ public class MainProg {
 	 */
 	public static void main(String[] args) {
 		
-		int[] arr = generateRandomIntArray(400); 
+		int[] arr = generateRandomIntArray(40000); 
 		int[] arr2 = copyArray(arr); 
 		
 //		for(int val: arr)
