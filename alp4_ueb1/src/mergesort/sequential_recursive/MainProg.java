@@ -7,21 +7,33 @@ public class MainProg {
 	 */
 	public static void main(String[] args) {
 		
-		int[] arr = generateRandomIntArray(40000); 
-		int[] arr2 = copyArray(arr); 
+		int[] array1 = generateRandomIntArray(4000); 
+		int[] array5 = generateRandomIntArray(40000); 
+		int[] array2 = generateRandomIntArray(400000); 
+		int[] array3 = generateRandomIntArray(4000000); 
+		int[] array4 = generateRandomIntArray(40000000);
+		
+//		int[] arr2 = copyArray(array1); 
 		
 //		for(int val: arr)
 //		{
 //			System.out.println(val);
 //		}
 
-		
-		Sort mergeSortSeqRec = new MergeSortSeqRec();
-		
-		long startTimeSeq = System.currentTimeMillis();
-		mergeSortSeqRec.sort(arr); 
-		long timeEllapsedSeq = System.currentTimeMillis() - startTimeSeq;
-		System.out.println("DAUER FÜR PARALLELE SORTIERUNG: " + timeEllapsedSeq);
+		int [] valueArray = {4,5,6};
+		Sort mergeSeq = new MergeSortSeqRec();
+		//for (int i=1;i<=5;i++){
+		for (int i : valueArray){
+			//iterate over array
+			System.out.println(i);
+			for (int j=1;j<=10;j++){
+				//measure 10 runs
+				
+				//remove the shortest and the longest time and give the average value
+			}
+		}
+			
+		System.out.println("time for sequential sorting: " + mergeSeq.sort(array1));
 		
 		
 //		System.out.println("ANFANG AUSGABE DER SEQUENTIELL SORTIERTEN MENGE");
@@ -34,12 +46,9 @@ public class MainProg {
 
 		
 		
-		Sort mergeSortParallelRec = new MergeSortParallelRec();
+		Sort mergeParallel = new MergeSortParallelRec();
 		
-		long startTimePara = System.currentTimeMillis();
-		mergeSortParallelRec.sort(arr2); 
-		long timeEllapsedPara = System.currentTimeMillis() - startTimePara;
-		System.out.println("DAUER FÜR PARALLELE SORTIERUNG: " + timeEllapsedPara);
+		System.out.println("time for parallel sorting: " + mergeParallel.sort(array1));
 		
 		
 //		System.out.println("ANFANG AUSGABE DER PARALLEL SORTIERTEN MENGE");

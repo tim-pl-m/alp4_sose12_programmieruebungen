@@ -2,8 +2,10 @@ package mergesort.sequential_recursive;
 
 public class MergeSortSeqRec implements Sort {
 
-	public void sort(int[] array) {
-		mergeSort(array, 0, array.length - 1); 
+	public long sort(int[] array) {
+		long time=System.currentTimeMillis();
+		mergeSort(array, 0, array.length - 1);
+		return (System.currentTimeMillis()-time);
 	}
 
 	private void mergeSort(int[] array, int lower, int upper)

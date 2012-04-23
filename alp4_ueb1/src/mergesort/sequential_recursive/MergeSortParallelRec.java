@@ -12,8 +12,9 @@ public class MergeSortParallelRec implements Sort {
 	
 	int[] array; 
 	
-	public void sort(int[] array) {
+	public long sort(int[] array) {
 		this.array = array; 
+		long time=System.currentTimeMillis();
 		
 		MergeSortThread mergeSortThread = new MergeSortThread(0, array.length -1);
 		
@@ -26,7 +27,7 @@ public class MergeSortParallelRec implements Sort {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} 
-		
+		return (System.currentTimeMillis()-time);
 	}
 
 	
