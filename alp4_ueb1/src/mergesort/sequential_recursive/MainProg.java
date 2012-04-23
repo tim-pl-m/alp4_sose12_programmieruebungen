@@ -21,8 +21,8 @@ public class MainProg {
 //		{
 //			System.out.println(val);
 //		}
-		int [] valueArray = {4000};
-//		int [] valueArray = {4000,40000,400000,4000000,40000000};
+//		int [] valueArray = {4000};
+		int [] valueArray = {4000,40000,400000,4000000,40000000};
 		//System.out.println(valueArray.length);
 		Sort mergeSeq = new MergeSortSeqRec();
 		Sort mergeParallel = new MergeSortParallelRec();
@@ -64,20 +64,20 @@ public class MainProg {
 					hP=values[1][j];
 				sumS=sumS+values[0][j];
 				sumP=sumP+values[1][j];
-				System.out.println(sumS);
+//				System.out.println(sumS);
 			}
-			System.out.println(Arrays.deepToString(values));
-			System.out.println(sS+","+hS);
-			System.out.println(sP+","+hP);
-			System.out.println(sumS+","+sumP);
+//			System.out.println(Arrays.deepToString(values));
+//			System.out.println(sS+","+hS);
+//			System.out.println(sP+","+hP);
+//			System.out.println(sumS+","+sumP);
 			double avgS=(sumS-sS-hS)/(x-2);
 			double avgP=(sumP-sP-hP)/(x-2);
 			double SprintUp=((avgS/avgP)-1)*100;
 			System.out.println("("+avgS+","+avgP+","+SprintUp+")");
 		}
 		
-//		int n = 40000000;
-		int n = 4000;
+		int n = 40000000;
+//		int n = 4000;
 		for (int c=1; c<=16; c++){
 			//iterate over array
 			System.out.println(c+"Threads:");
@@ -113,12 +113,12 @@ public class MainProg {
 					hP=values[1][j];
 				sumS=sumS+values[0][j];
 				sumP=sumP+values[1][j];
-				System.out.println(sumS);
+//				System.out.println(sumS);
 			}
-			System.out.println(Arrays.deepToString(values));
-			System.out.println(sS+","+hS);
-			System.out.println(sP+","+hP);
-			System.out.println(sumS+","+sumP);
+//			System.out.println(Arrays.deepToString(values));
+//			System.out.println(sS+","+hS);
+//			System.out.println(sP+","+hP);
+//			System.out.println(sumS+","+sumP);
 			double avgS=(sumS-sS-hS)/(x-2);
 			double avgP=(sumP-sP-hP)/(x-2);
 			double SprintUp=((avgS/avgP)-1)*100;
