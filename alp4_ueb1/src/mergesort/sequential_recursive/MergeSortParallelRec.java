@@ -29,7 +29,24 @@ public class MergeSortParallelRec implements Sort {
 		} 
 		return (System.currentTimeMillis()-time);
 	}
-
+	
+	public long sortWithThreads(int[] array, int c) {
+		this.array = array; 
+		long time=System.currentTimeMillis();
+		
+		MergeSortThread mergeSortThread = new MergeSortThread(0, array.length -1);
+		
+		incUsedThreadNumber(); 
+		Thread th = new Thread(mergeSortThread); 
+		th.start(); 
+		
+		try {
+			th.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} 
+		return (System.currentTimeMillis()-time);
+	}
 	
 	private class MergeSortThread implements Runnable
 	{
@@ -139,6 +156,8 @@ public class MergeSortParallelRec implements Sort {
 		}
 
 	}
+
+
 	
 	
 

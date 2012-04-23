@@ -60,4 +60,9 @@ public class MergeSortSeqRec implements Sort {
 		
 	}
 
+	public long sortWithThreads(int[] array, int c) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
