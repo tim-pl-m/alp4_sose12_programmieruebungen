@@ -1,24 +1,35 @@
 package mergesort.sequential_recursive;
 
+// the following code is based on our sequential solution, modified on a few places for the implementation of the multi-threading
+
 public class MergeSortParallelRec implements Sort {
 
+	// defining the static, global variables for the maximum of used threads and the counter for the currently created threads
 	final static int MAX_THREAD_NUMBER = 2; 
 	static Integer used_thread_number = 0; 
 	
+	// thread-safe accessor-method for the counter
 	synchronized static int incUsedThreadNumber()
 	{
 		return used_thread_number++; 
 	}
 	
+	
+	
 	int[] array; 
 	
 	public long sort(int[] array) {
 		this.array = array; 
+		
+		// time measurement code
 		long time=System.currentTimeMillis();
 		
 		MergeSortThread mergeSortThread = new MergeSortThread(0, array.length -1);
 		
+		// the first root-thread is also incrementing the number of used threads
 		incUsedThreadNumber(); 
+
+		// create and start the root-thread
 		Thread th = new Thread(mergeSortThread); 
 		th.start(); 
 		
@@ -48,6 +59,8 @@ public class MergeSortParallelRec implements Sort {
 		return (System.currentTimeMillis()-time);
 	}
 	
+	
+	// moving the sort and merging code into a threadable class, so it can be run concurrently
 	private class MergeSortThread implements Runnable
 	{
 		
@@ -74,19 +87,23 @@ public class MergeSortParallelRec implements Sort {
 			{
 				Thread thLeft = null;  
 
+				// check that we are still allowed to create new threads
 				if(incUsedThreadNumber() < MAX_THREAD_NUMBER)
 				{
 					MergeSortThread mergeSortThreadLeft = new MergeSortThread(lower, middle);
 					thLeft = new Thread(mergeSortThreadLeft); 
 					thLeft.start(); 
 				}
+				
+				// otherwise: use the sequential, non-threaded version (with direct call of mergeSort on the same object without creating and starting a new thread-object)  
 				else
 				{
 					this.mergeSort(lower, middle); 
 				}
 				
 				
-				
+				// AGAIN FOR THE OTHER recursive mergeSort-call:
+				// check that we are still allowed to create new threads
 				Thread thRight = null;  
 				if(incUsedThreadNumber() < MAX_THREAD_NUMBER)
 				{
@@ -94,11 +111,17 @@ public class MergeSortParallelRec implements Sort {
 					thRight = new Thread(mergeSortThreadRight); 
 					thRight.start(); 
 				}
+
+				// AGAIN FOR THE OTHER recursive mergeSort-call: 
+				// otherwise: use the sequential, non-threaded version (with direct call of mergeSort on the same object without creating and starting a new thread-object)  
 				else
 				{
 					this.mergeSort(middle+1, upper); 
 				}
+				
+				
 
+				// if there are threads: waiting for their termination
 				try {
 					if(thLeft != null)
 						thLeft.join();
@@ -115,6 +138,7 @@ public class MergeSortParallelRec implements Sort {
 			}
 		}
 		
+		// the merge-method is not modified, because it is not running concurrently
 		private void merge(int lower, int middle, int upper)
 		{
 			// the tmpArray is created separately with every new call of merge

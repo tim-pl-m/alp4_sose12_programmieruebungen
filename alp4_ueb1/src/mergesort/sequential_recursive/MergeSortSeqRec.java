@@ -1,7 +1,7 @@
 package mergesort.sequential_recursive;
 
 
-// the following code is a nearly one-to-one transformation of the provided pseudo-code to the corresponding java-version
+// the following code is nearly a one-to-one transformation of the provided pseudo-code to the corresponding java-version
 
 public class MergeSortSeqRec implements Sort {
 
