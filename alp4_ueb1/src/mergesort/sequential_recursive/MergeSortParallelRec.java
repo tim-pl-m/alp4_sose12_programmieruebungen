@@ -75,7 +75,7 @@ public class MergeSortParallelRec implements Sort {
 		
 
 		public void run() {
-			System.out.println("RUN THREAD WITH ID: " + this.hashCode());
+//			System.out.println("RUN THREAD WITH ID: " + this.hashCode());
 			this.mergeSort(this.lower, this.upper); 
 		}
 		
