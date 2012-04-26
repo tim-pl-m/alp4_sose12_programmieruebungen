@@ -4,7 +4,7 @@ package mergesort.sequential_recursive;
 
 public class MergeSortParallelRec implements Sort {
 
-	// defining the static, global variables for the maximum of used threads and the counter for the currently created threads
+	// defining the global variables for the maximum of used threads and the counter for the currently created threads
 	int MAX_THREAD_NUMBER; 
 	Integer used_thread_number = 0; 
 	
