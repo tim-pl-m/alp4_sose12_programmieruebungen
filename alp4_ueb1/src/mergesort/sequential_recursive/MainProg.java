@@ -17,7 +17,7 @@ public class MainProg {
 		int n = 40000;
 		for (int c=1; c<=16; c++){
 			//iterate over array
-			System.out.println(c+"Threads:");
+			System.out.println(c+" Threads: ");
 			
 			int x=10;
 			//number of runs
@@ -52,13 +52,13 @@ public class MainProg {
 			double avgS=(sumS-sS-hS)/(x-2);
 			double avgP=(sumP-sP-hP)/(x-2);
 			double SprintUp=((avgS/avgP)-1)*100;
-			System.out.println("("+avgS+","+avgP+","+SprintUp+")");
+			System.out.println("("+avgS+", "+avgP+", "+SprintUp+")");
 		}
 
 //		int [] valueArray = {4000};
 		int [] valueArray = {4000,40000,400000,4000000,40000000};
 
-		System.out.println("(avg.time for sequential sorting,avg.time for parallel sorting,speed-up)");
+		System.out.println("(avg.time for sequential sorting, avg.time for parallel sorting, speed-up)");
 		for (int n1 : valueArray){
 			//iterate over array
 			System.out.println("n= "+n1+":");
@@ -96,7 +96,7 @@ public class MainProg {
 			double avgS=(sumS-sS-hS)/(x-2);
 			double avgP=(sumP-sP-hP)/(x-2);
 			double SprintUp=((avgS/avgP)-1)*100;
-			System.out.println("("+avgS+","+avgP+","+SprintUp+")");
+			System.out.println("("+avgS+", "+avgP+", "+SprintUp+")");
 		}
 		
 
