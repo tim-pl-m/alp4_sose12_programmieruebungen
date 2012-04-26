@@ -43,6 +43,7 @@ public class MergeSortParallelRec implements Sort {
 	
 	public long sortWithThreads(int[] array, int c) {
 		this.MAX_THREAD_NUMBER = c;
+		this.used_thread_number = 0; 
 		this.array = array; 
 		long time=System.currentTimeMillis();
 		
