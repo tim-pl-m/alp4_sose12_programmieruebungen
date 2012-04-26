@@ -2,7 +2,7 @@ package mergesort.sequential_recursive;
 
 public class MergeSortParallelRec implements Sort {
 
-	final static int MAX_THREAD_NUMBER = 2; 
+	static int MAX_THREAD_NUMBER = 2; 
 	static Integer used_thread_number = 0; 
 	
 	synchronized static int incUsedThreadNumber()
@@ -31,6 +31,7 @@ public class MergeSortParallelRec implements Sort {
 	}
 	
 	public long sortWithThreads(int[] array, int c) {
+		MAX_THREAD_NUMBER=c;
 		this.array = array; 
 		long time=System.currentTimeMillis();
 		
