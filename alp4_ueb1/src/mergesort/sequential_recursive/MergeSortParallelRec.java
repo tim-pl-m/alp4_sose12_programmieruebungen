@@ -5,11 +5,11 @@ package mergesort.sequential_recursive;
 public class MergeSortParallelRec implements Sort {
 
 	// defining the static, global variables for the maximum of used threads and the counter for the currently created threads
-	final static int MAX_THREAD_NUMBER = 2; 
-	static Integer used_thread_number = 0; 
+	int MAX_THREAD_NUMBER; 
+	Integer used_thread_number = 0; 
 	
 	// thread-safe accessor-method for the counter
-	synchronized static int incUsedThreadNumber()
+	synchronized int incUsedThreadNumber()
 	{
 		return used_thread_number++; 
 	}
@@ -42,6 +42,7 @@ public class MergeSortParallelRec implements Sort {
 	}
 	
 	public long sortWithThreads(int[] array, int c) {
+		this.MAX_THREAD_NUMBER = c;
 		this.array = array; 
 		long time=System.currentTimeMillis();
 		
@@ -73,7 +74,7 @@ public class MergeSortParallelRec implements Sort {
 		
 
 		public void run() {
-//			System.out.println("RUN THREAD: " + this.hashCode());
+			System.out.println("RUN THREAD: " + this.hashCode());
 			this.mergeSort(this.lower, this.upper); 
 		}
 		
