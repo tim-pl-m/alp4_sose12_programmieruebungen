@@ -13,12 +13,23 @@ public class AliceBob {
 	AtomicBoolean runBob = new AtomicBoolean(true); 
 	
 	
-	
-	public class Alice
+	public void runAlice()
 	{
-		public void runAlice()
+		this.runAlice.set(true); 
+		
+		Alice alice = new Alice(); 
+		
+		Thread aliceThread = new Thread(alice); 
+		aliceThread.start(); 
+		
+		
+	}
+	
+	public class Alice implements Runnable
+	{
+		public void run()
 		{
-			while(true)
+			while(runAlice.get())
 			{
 				// GO AROUDN TOWN
 				// randomSekundenZahl zwischen 2 und 10 und für diese Zeit sleepen
@@ -29,7 +40,7 @@ public class AliceBob {
 				
 				while( ! (bobsFlag1.get() == false || alicesFlag2.get() != bobsFlag2.get()) )
 				{
-					
+					System.out.println("ALICE BUSY WAITING");
 				}
 				
 				// CIRITICAL SECTION
@@ -38,8 +49,6 @@ public class AliceBob {
 				
 				// LEAVE CRITICAL SECTION
 				alicesFlag1.set(false); 
-				
-				
 				
 			}
 			

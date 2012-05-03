@@ -1,4 +1,3 @@
-import java.util.concurrent.atomic.*;
 
 
 public class MainProg {
@@ -8,8 +7,9 @@ public class MainProg {
 	 */
 	public static void main(String[] args) {
 		
-		AtomicBoolean flag1 = new AtomicBoolean(); 
-		flag1 = true; 
+		AliceBob aliceBob = new AliceBob(); 
+		
+		aliceBob.runAlice(); 
 		
 		
 		
