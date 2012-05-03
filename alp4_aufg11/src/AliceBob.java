@@ -1,4 +1,5 @@
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class AliceBob {
@@ -12,7 +13,7 @@ public class AliceBob {
 	AtomicBoolean runAlice = new AtomicBoolean(true); 
 	AtomicBoolean runBob = new AtomicBoolean(true); 
 
-//	AtomicBoolean gardenIsUsed = new AtomicBoolean(false); 
+	AtomicInteger numberOfDogsInTheYard = new AtomicInteger(0); 
 
 	
 	public void runAlice()
@@ -55,10 +56,29 @@ public class AliceBob {
 				while( ! (bobsFlag1.get() == false || alicesFlag2.get() != bobsFlag2.get()) )
 				{
 					System.out.println("ALICE BUSY WAITING");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
 				}
 				
 				// CIRITICAL SECTION
-				System.err.println("ALICES DOG IN THE YARD");
+				if(numberOfDogsInTheYard.incrementAndGet() != 1)
+				{
+					System.err.println("ERROR!! MORE THAN ONE DOG IN THE YARD [REGOCINGED WHILE LEAVING ALICES DOG IN THE YARD");
+				}
+				
+				System.out.println("ALICES DOG IN THE YARD");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				
+				numberOfDogsInTheYard.decrementAndGet(); 
 				
 				
 				// LEAVE CRITICAL SECTION
@@ -87,11 +107,31 @@ public class AliceBob {
 				while( ! (alicesFlag1.get() == false || alicesFlag2.get() == bobsFlag2.get()) )
 				{
 					System.out.println("BOB BUSY WAITING");
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+					
 				}
 				
 				// CIRITICAL SECTION
-				System.err.println("BOBS DOG IN THE YARD");
+				if(numberOfDogsInTheYard.incrementAndGet() != 1)
+				{
+					System.err.println("ERROR!! MORE THAN ONE DOG IN THE YARD [REGOCINGED WHILE LEAVING ALICES DOG IN THE YARD");
+				}
 				
+				
+				System.out.println("BOBS DOG IN THE YARD");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				numberOfDogsInTheYard.decrementAndGet(); 
 				
 				// LEAVE CRITICAL SECTION
 				bobsFlag1.set(false); 
