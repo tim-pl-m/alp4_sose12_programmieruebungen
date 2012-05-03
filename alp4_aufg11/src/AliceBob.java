@@ -24,6 +24,21 @@ public class AliceBob {
 				// randomSekundenZahl zwischen 2 und 10 und für diese Zeit sleepen
 				
 				// ENTRY-SECTION
+				alicesFlag1.set(true); 
+				alicesFlag2.set(bobsFlag2.get()); 
+				
+				while( ! (bobsFlag1.get() == false || alicesFlag2.get() != bobsFlag2.get()) )
+				{
+					
+				}
+				
+				// CIRITICAL SECTION
+				System.err.println("ALICES DOG IN THE YARD");
+				
+				
+				// LEAVE CRITICAL SECTION
+				alicesFlag1.set(false); 
+				
 				
 				
 			}
