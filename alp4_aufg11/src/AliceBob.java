@@ -11,7 +11,9 @@ public class AliceBob {
 
 	AtomicBoolean runAlice = new AtomicBoolean(true); 
 	AtomicBoolean runBob = new AtomicBoolean(true); 
-	
+
+//	AtomicBoolean gardenIsUsed = new AtomicBoolean(false); 
+
 	
 	public void runAlice()
 	{
@@ -22,9 +24,21 @@ public class AliceBob {
 		Thread aliceThread = new Thread(alice); 
 		aliceThread.start(); 
 		
-		
 	}
 	
+
+	
+	public void runBob()
+	{
+		this.runBob.set(true); 
+		
+		Bob bob = new Bob(); 
+		
+		Thread bobThread = new Thread(bob); 
+		bobThread.start(); 
+		
+	}
+
 	public class Alice implements Runnable
 	{
 		public void run()
@@ -49,6 +63,38 @@ public class AliceBob {
 				
 				// LEAVE CRITICAL SECTION
 				alicesFlag1.set(false); 
+				
+			}
+		}
+	}
+	
+	
+	
+
+	public class Bob implements Runnable
+	{
+		public void run()
+		{
+			while(runBob.get())
+			{
+				// GO AROUDN TOWN
+				// randomSekundenZahl zwischen 2 und 10 und für diese Zeit sleepen
+				
+				// ENTRY-SECTION
+				bobsFlag1.set(true); 
+				bobsFlag2.set(! alicesFlag2.get()); 
+				
+				while( ! (alicesFlag1.get() == false || alicesFlag2.get() == bobsFlag2.get()) )
+				{
+					System.out.println("BOB BUSY WAITING");
+				}
+				
+				// CIRITICAL SECTION
+				System.err.println("BOBS DOG IN THE YARD");
+				
+				
+				// LEAVE CRITICAL SECTION
+				bobsFlag1.set(false); 
 				
 			}
 			
