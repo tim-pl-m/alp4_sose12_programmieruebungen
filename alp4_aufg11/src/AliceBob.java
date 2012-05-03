@@ -57,7 +57,7 @@ public class AliceBob {
 				{
 					System.out.println("ALICE BUSY WAITING");
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -108,7 +108,7 @@ public class AliceBob {
 				{
 					System.out.println("BOB BUSY WAITING");
 					try {
-						Thread.sleep(1000);
+						Thread.sleep(200);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -125,7 +125,7 @@ public class AliceBob {
 				
 				System.out.println("BOBS DOG IN THE YARD");
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
