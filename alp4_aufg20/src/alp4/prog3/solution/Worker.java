@@ -2,119 +2,141 @@ package alp4.prog3.solution;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 class Worker extends Thread {
 
-	String name; 
+	String name;
+
+	int[][] image;
+	int[][] label;
+
+	int leftBound;
+	int rightBound;
+
+	CyclicBarrier barrier;
+
+	public Worker(String name, int[][] image, int[][] label, int leftBound,
+			int rightBound, CyclicBarrier barrier) {
+		this.name = name;
+		this.image = image;
+		this.label = label;
+		this.leftBound = leftBound;
+		this.rightBound = rightBound;
+		this.barrier = barrier;
+	}
+
+	public static class IntTupel {
+		final public int y;
+		final public int x;
+
+		public IntTupel(int y, int x) {
+			this.y = y;
+			this.x = x;
+		}
+	}
+
+	public void work() {
+
+		boolean[][] doneMarker = new boolean[leftBound + 1][image.length];
+
+		for (int y = 0; y <= leftBound; y++) {
+
+			for (int x = 0; x <= leftBound; x++) {
+				if (doneMarker[y][x] == true)
+					continue;
+
+				int value = this.image[y][x];
+				List<IntTupel> foundList = new LinkedList<IntTupel>();
+				Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
+
+				int maximum = (y*this.image.length) + x; 
+				stack.push(new IntTupel(y, x));
+
+				IntTupel current;
+				while ((current = stack.pop()) != null) {
+					if (doneMarker[current.y][current.x] == false) {
+						foundList.add(current);
+
+						/*
+						 * checks hier ausführen
+						 */
+
+						maximum = this.checkForSameArea(y-1, x, value, stack, maximum); 
+						maximum = this.checkForSameArea(y, x-1, value, stack, maximum); 
+						maximum = this.checkForSameArea(y, x+1, value, stack, maximum); 
+						maximum = this.checkForSameArea(y+1, x, value, stack, maximum); 
+
+						doneMarker[current.y][current.x] = true;
+
+					}
+				}
+				
+				// kopiere an alle stellen aus foundList in label jeweils das maximum
+				for(IntTupel current2: foundList)
+				{
+					label[current2.y][current2.x] = maximum; 
+				}
+
+			}
+		}
+
+		/*
+		 * bool[][] doneMarker; // int[][] label foreach y,x
+		 * 
+		 * value = image[y][x]
+		 * 
+		 * if(doneMarker[y][x]) continue;
+		 * 
+		 * List<y,x> foundList
+		 * 
+		 * Stack stack; stack.push((y,x))
+		 * 
+		 * while((current = stack.pop) != null)
+		 * 
+		 * if(doneMarker[current.y][current.x] == false)
+		 * 
+		 * foundList.add((y,x));
+		 * 
+		 * check(y-1, x, value) check(y, x-1, value) check(y, x+1, value)
+		 * check(y+1, x, value)
+		 * 
+		 * doneMarker[y][x] = true
+		 * 
+		 * // kopiere an alle stellen aus foundList in label jeweils das maximum
+		 * for((y,x): foundList) label[y][x] = maximum;
+		 * 
+		 * 
+		 * 
+		 * check(y, x, value) if(image[y][x] == value) stack.push((y), x)
+		 * if((y,x) > max) max = (y,x)
+		 */
+
+	}
 	
-    int[][] image; 
-    int[][] label;
-    
-    int leftBound; 
-    int rightBound; 
-    
-    CyclicBarrier barrier;
+	// returns the new maximum
+	public int checkForSameArea(int y, int x, int value, Stack<IntTupel> stack, int oldMaximum)
+	{
+		if(image[y][x] == value)
+			stack.push(new IntTupel(y, x)); 
+		
+		return this.image[y][x] > oldMaximum ? this.image[y][x] : oldMaximum; 
+	}
 
-    
-    public Worker(String name, int[][] image, int[][] label, int leftBound, int rightBound, CyclicBarrier barrier) {
-    	this.name = name; 
-    	this.image = image; 
-    	this.label = label;
-    	this.leftBound = leftBound; 
-    	this.rightBound = rightBound; 
-        this.barrier = barrier;
-    }
+	public void run() {
 
-    public static class IntTupel
-    {
-    	final public int a; 
-    	final public int b; 
-    	
-    	public IntTupel(int a, int b)
-    	{
-    		this.a = a; 
-    		this.b = b; 
-    	}
-    }
-    
-    public void work()
-    {
-
-    	boolean[][] doneMarker = new boolean[leftBound+1][image.length]; 
-    	
-    	for(int y = 0; y <= leftBound; y++)
-    	{
-
-        	for(int x = 0; x <= leftBound; x++)
-        	{
-        		if(doneMarker[y][x] == true)
-        			continue; 
-        		
-        		int value = this.image[y][x]; 
-        		List<IntTupel> foundList = new LinkedList<IntTupel>(); 
-        		
-        		
-        	}	
-    	}
-    	
-    	/*
-    	 * bool[][] doneMarker; 
-    	 * // int[][] label
-    	 * foreach y,x
-    	 *   
-    	 *   value = image[y][x]
-    	 *   
-    	 *   if(doneMarker[y][x]) 
-    	 *     continue; 
-
-    	 *   List<y,x> foundList 
-    	 *     
-    	 *   Stack stack; 
-    	 *   stack.push((y,x))
-    	 *   
-    	 *   while((current = stack.pop) != null)
-    	 *   
-    	 *     if(doneMarker[current.y][current.x] == false)
-    	 *     
-    	 *       foundList.add((y,x)); 
-    	 *       
-    	 *       check(y-1, x, value)
-    	 *       check(y, x-1, value)
-    	 *       check(y, x+1, value)
-    	 *       check(y+1, x, value)
-    	 *         
-    	 *       doneMarker[y][x] = true
-    	 *   
-    	 *   // kopiere an alle stellen aus foundList in label jeweils das maximum 
-    	 *   for((y,x): foundList)
-    	 *     label[y][x] = maximum; 
-    	 * 
-    	 * 
-    	 * 
-    	 * check(y, x, value)
-    	 *   if(image[y][x] == value)
-    	 *     stack.push((y), x)
-    	 *     if((y,x) > max)
-    	 *       max = (y,x)
-    	 * 
-    	 */
-    	
-    }
-    
-    public void run() {
-    	
-        System.out.println("WAITING says:" + name);
-        try {
-            barrier.await();
-            this.work(); 
-            System.out.println("WORKING HARD NOW says:"+ name);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (BrokenBarrierException e) {
-            e.printStackTrace();
-        }
-        System.out.println("FINISHED says: "+ name);
-    }
+		System.out.println("WAITING says:" + name);
+		try {
+			barrier.await();
+			this.work();
+			System.out.println("WORKING HARD NOW says:" + name);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
+			e.printStackTrace();
+		}
+		System.out.println("FINISHED says: " + name);
+	}
 }
