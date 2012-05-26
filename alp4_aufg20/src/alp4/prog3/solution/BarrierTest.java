@@ -38,10 +38,9 @@ public class BarrierTest {
 
     public static void main(String[] args) {
     	int[][] image = {
-    			{3,3,4,5}, 
-    			{5,1,2,2}, 
-    			{3,2,2,3}, 
-    			{3,3,4,5}
+    			{3,3,4}, 
+    			{5,1,2}, 
+    			{1,1,2}, 
     			}; 
     	
     	int n = image.length; 
@@ -65,11 +64,11 @@ public class BarrierTest {
     {
     	int n = arr.length; 
     	
-    	for(int x = 0; x < n; x++)
+    	for(int y = 0; y < n; y++)
     	{
-    		for(int y = 0; y < n; y++)
+    		for(int x = 0; x < n; x++)
     		{
-    			System.out.print(arr[x][y] + " ");
+    			System.out.print(arr[y][x] + " ");
     		}
     		System.out.println();
     	}
