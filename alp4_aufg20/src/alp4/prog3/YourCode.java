@@ -26,12 +26,18 @@ public class YourCode {
 		public void process(int[][] image, int[][] label)
 		{
 			// TODO: implement something here...
-			for(int x = 0, i = 0; x < image.length; x++){
-				for(int y = 0; y < image[0].length; y++){
-					label[x][y] = image[x][y];
-					//label[x][y] = (x < image.length / 2) ? 59 : 63;
-				}
-			}
+			
+			
+			
+			
+			
+			
+//			for(int x = 0, i = 0; x < image.length; x++){
+//				for(int y = 0; y < image[0].length; y++){
+//					label[x][y] = image[x][y];
+//					//label[x][y] = (x < image.length / 2) ? 59 : 63;
+//				}
+//			}
 		}
 	}
 }

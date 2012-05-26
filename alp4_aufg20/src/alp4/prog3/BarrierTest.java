@@ -8,13 +8,20 @@ public class BarrierTest {
 
 
     class Worker extends Thread {
-        CyclicBarrier barrier;
-        // name of the thread
-        String name;
 
-        public Worker(String threadName, CyclicBarrier cBarrier) {
+    	String name; 
+    	
+        int[][] image; 
+        int[][] label;
+        
+        CyclicBarrier barrier;
+
+        
+        public Worker(String name, int[][] image, int[][] label, CyclicBarrier cBarrier) {
+        	this.name = name; 
+        	this.image = image; 
+        	this.label = label; 
             barrier = cBarrier;
-            name = threadName;
         }
 
         public void run() {
@@ -31,7 +38,10 @@ public class BarrierTest {
         }
     }
 
-    public void testCyclicBarrier() {
+    public void testCyclicBarrier(int[][] image, int[][] label) {
+    	
+    	
+    	
         CyclicBarrier barrier = new CyclicBarrier(2, new Runnable() {
                 public void run() {
                     try {
@@ -45,15 +55,15 @@ public class BarrierTest {
             });
 
         for (int i = 0; i < 2; i++) {
-            Worker worker = new Worker("Thread_"+i,barrier);
+            Worker worker = new Worker("Thread_"+i, image, label, barrier);
             worker.start();
         }
 
     }
 
 
-    public static void main(String[] args) {
-        BarrierTest t = new BarrierTest();
-        t.testCyclicBarrier();
-    }
+//    public static void main(String[] args) {
+//        BarrierTest t = new BarrierTest();
+//        t.testCyclicBarrier();
+//    }
 }
