@@ -28,6 +28,36 @@ class Worker extends Thread {
     public void run() {
     	
     	
+    	/*
+    	 * 
+    	 * int[][] result
+    	 * foreach y,x
+    	 *   
+    	 *   value = image[y][x]
+    	 *   stack.push((y,x))
+    	 *   
+    	 *   while((current = stack.pop) != null)
+    	 *   
+    	 *     if(image[current.y][current.x] != null)
+    	 *     
+    	 *       check(y-1, x, value)
+    	 *       check(y, x-1, value)
+    	 *       check(y, x+1, value)
+    	 *       check(y+1, x, value)
+    	 *         
+    	 *       image[y][x] = null
+    	 * 
+    	 * 
+    	 * 
+    	 * 
+    	 * check(y, x, value)
+    	 *   if(image[y][x] == value)
+    	 *     stack.push((y-1), x)
+    	 *     if((y,x) > max)
+    	 *       max = (y,x)
+    	 * 
+    	 */
+    	
     	
         System.out.println("WAITING says:" + name);
         try {
