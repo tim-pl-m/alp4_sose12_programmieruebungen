@@ -132,7 +132,8 @@ class Worker extends Thread {
 		if(image[y][x] == value)
 			stack.push(new IntTupel(y, x)); 
 		
-		return this.image[y][x] > oldMaximum ? this.image[y][x] : oldMaximum; 
+		int newMax = (y*this.image.length) + x; 
+		return newMax > oldMaximum ? newMax : oldMaximum; 
 	}
 
 	public void run() {
