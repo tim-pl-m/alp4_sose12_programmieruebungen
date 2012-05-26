@@ -14,14 +14,19 @@ public class BarrierTest {
         int[][] image; 
         int[][] label;
         
+        int leftBound; 
+        int rightBound; 
+        
         CyclicBarrier barrier;
 
         
-        public Worker(String name, int[][] image, int[][] label, CyclicBarrier cBarrier) {
+        public Worker(String name, int[][] image, int[][] label, int leftBound, int rightBound, CyclicBarrier barrier) {
         	this.name = name; 
         	this.image = image; 
-        	this.label = label; 
-            barrier = cBarrier;
+        	this.label = label;
+        	this.leftBound = leftBound; 
+        	this.rightBound = rightBound; 
+            this.barrier = barrier;
         }
 
         public void run() {
@@ -54,7 +59,7 @@ public class BarrierTest {
                 }
             });
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 1; i++) {
             Worker worker = new Worker("Thread_"+i, image, label, barrier);
             worker.start();
         }
