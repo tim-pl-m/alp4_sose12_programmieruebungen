@@ -44,7 +44,7 @@ class Worker extends Thread {
 
 		for (int y = 0; y < image.length; y++) {
 
-			for (int x = 0; x < image.length; x++) {
+			for (int x = 0; x < image[y].length; x++) {
 				if (doneMarker[y][x] == true)
 					continue;
 

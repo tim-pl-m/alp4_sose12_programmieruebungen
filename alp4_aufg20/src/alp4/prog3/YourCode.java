@@ -1,5 +1,7 @@
 package alp4.prog3;
 
+import alp4.prog3.solution.BarrierTest;
+
 /* 
 	This file is just a proposal, you may change it at your convenience.
 	Handed in "Framework.java" files will not be considered and you also
@@ -25,13 +27,17 @@ public class YourCode {
 		@Override
 		public void process(int[][] image, int[][] label)
 		{
-			// TODO: implement something here...
-			for(int x = 0, i = 0; x < image.length; x++){
-				for(int y = 0; y < image[0].length; y++){
-					label[x][y] = image[x][y];
-					//label[x][y] = (x < image.length / 2) ? 59 : 63;
-				}
-			}
+			
+			BarrierTest barrierTest = new BarrierTest(); 
+			barrierTest.testCyclicBarrier(image, label); 
+			
+//			// TODO: implement something here...
+//			for(int x = 0, i = 0; x < image.length; x++){
+//				for(int y = 0; y < image[0].length; y++){
+//					label[x][y] = image[x][y];
+//					//label[x][y] = (x < image.length / 2) ? 59 : 63;
+//				}
+//			}
 		}
 	}
 }
