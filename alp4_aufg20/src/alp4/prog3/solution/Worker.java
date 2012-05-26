@@ -30,10 +30,16 @@ class Worker extends Thread {
     	
     	/*
     	 * 
-    	 * int[][] result
+    	 * // int[][] label
     	 * foreach y,x
     	 *   
+    	 *   List<y,x> foundList 
+    	 *   
     	 *   value = image[y][x]
+    	 *   
+    	 *   if(value == null) 
+    	 *     continue; 
+    	 *     
     	 *   stack.push((y,x))
     	 *   
     	 *   while((current = stack.pop) != null)
@@ -46,13 +52,16 @@ class Worker extends Thread {
     	 *       check(y+1, x, value)
     	 *         
     	 *       image[y][x] = null
-    	 * 
+    	 *   
+    	 *   // kopiere an alle stellen aus foundList in label jeweils das maximum 
+    	 *   for((y,x): foundList)
+    	 *     label[y][x] = maximum; 
     	 * 
     	 * 
     	 * 
     	 * check(y, x, value)
     	 *   if(image[y][x] == value)
-    	 *     stack.push((y-1), x)
+    	 *     stack.push((y), x)
     	 *     if((y,x) > max)
     	 *       max = (y,x)
     	 * 
