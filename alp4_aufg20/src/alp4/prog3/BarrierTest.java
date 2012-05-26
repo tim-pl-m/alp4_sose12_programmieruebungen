@@ -87,32 +87,32 @@ public class BarrierTest {
     	int[][] label = new int[n][n]; 
     	
     	
-    	System.out.println("Image: ");
-    	for(int x = 0; x < n; x++)
-    	{
-    		for(int y = 0; y < n; y++)
-    		{
-    			System.out.print(image[x][y] + " ");
-    		}
-    		System.out.println();
-    	}
-    	
     	BarrierTest barrierTest = new BarrierTest(); 
     	barrierTest.testCyclicBarrier(image, label); 
     	
-    	
+
     	System.out.println("Image: ");
+    	printArray(image); 
+
+    	System.out.println("Label: ");
+    	printArray(label); 
+
+    	
+    }
+
+    public static void printArray(int[][] arr)
+    {
+    	int n = arr.length; 
+    	
     	for(int x = 0; x < n; x++)
     	{
     		for(int y = 0; y < n; y++)
     		{
-    			System.out.print(image[x][y] + " ");
+    			System.out.print(arr[x][y] + " ");
     		}
     		System.out.println();
     	}
-    	
     }
-
 
 //    public static void main(String[] args) {
 //        BarrierTest t = new BarrierTest();
