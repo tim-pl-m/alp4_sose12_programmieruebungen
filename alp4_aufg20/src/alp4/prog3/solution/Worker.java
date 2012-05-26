@@ -56,7 +56,8 @@ class Worker extends Thread {
 				stack.push(new IntTupel(y, x));
 
 				IntTupel current;
-				while ((current = stack.pop()) != null) {
+				while ( ! stack.isEmpty() ) {
+					current = stack.pop(); 
 					if (doneMarker[current.y][current.x] == false) {
 						foundList.add(current);
 
@@ -119,6 +120,15 @@ class Worker extends Thread {
 	// returns the new maximum
 	public int checkForSameArea(int y, int x, int value, Stack<IntTupel> stack, int oldMaximum)
 	{
+		if(y >= image.length || y < 0)
+		{
+			return oldMaximum; 
+		}
+		if(x >= image[y].length || x < 0)
+		{
+			return oldMaximum; 
+		}
+		
 		if(image[y][x] == value)
 			stack.push(new IntTupel(y, x)); 
 		
