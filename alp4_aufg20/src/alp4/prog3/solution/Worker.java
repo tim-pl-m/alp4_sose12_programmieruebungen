@@ -85,37 +85,6 @@ class Worker extends Thread {
 			}
 		}
 
-		/*
-		 * bool[][] doneMarker; // int[][] label foreach y,x
-		 * 
-		 * value = image[y][x]
-		 * 
-		 * if(doneMarker[y][x]) continue;
-		 * 
-		 * List<y,x> foundList
-		 * 
-		 * Stack stack; stack.push((y,x))
-		 * 
-		 * while((current = stack.pop) != null)
-		 * 
-		 * if(doneMarker[current.y][current.x] == false)
-		 * 
-		 * foundList.add((y,x));
-		 * 
-		 * check(y-1, x, value) check(y, x-1, value) check(y, x+1, value)
-		 * check(y+1, x, value)
-		 * 
-		 * doneMarker[y][x] = true
-		 * 
-		 * // kopiere an alle stellen aus foundList in label jeweils das maximum
-		 * for((y,x): foundList) label[y][x] = maximum;
-		 * 
-		 * 
-		 * 
-		 * check(y, x, value) if(image[y][x] == value) stack.push((y), x)
-		 * if((y,x) > max) max = (y,x)
-		 */
-
 	}
 	
 	// returns the new maximum
