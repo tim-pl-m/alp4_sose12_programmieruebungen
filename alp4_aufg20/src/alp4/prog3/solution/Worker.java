@@ -65,16 +65,17 @@ class Worker extends Thread {
 						 * checks hier ausführen
 						 */
 
-						maximum = this.checkForSameArea(y-1, x, value, stack, maximum); 
-						maximum = this.checkForSameArea(y, x-1, value, stack, maximum); 
-						maximum = this.checkForSameArea(y, x+1, value, stack, maximum); 
-						maximum = this.checkForSameArea(y+1, x, value, stack, maximum); 
+						maximum = this.checkForSameArea(current.y-1, current.x, value, stack, maximum); 
+						maximum = this.checkForSameArea(current.y, current.x-1, value, stack, maximum); 
+						maximum = this.checkForSameArea(current.y, current.x+1, value, stack, maximum); 
+						maximum = this.checkForSameArea(current.y+1, current.x, value, stack, maximum); 
 
 						doneMarker[current.y][current.x] = true;
 
 					}
+					
 				}
-				
+
 				// kopiere an alle stellen aus foundList in label jeweils das maximum
 				for(IntTupel current2: foundList)
 				{
@@ -136,7 +137,7 @@ class Worker extends Thread {
 		stack.push(new IntTupel(y, x)); 
 		
 		int newMax = (y*this.image.length) + x; 
-		return newMax > oldMaximum ? newMax : oldMaximum; 
+		return newMax >= oldMaximum ? newMax : oldMaximum; 
 	}
 
 	public void run() {
