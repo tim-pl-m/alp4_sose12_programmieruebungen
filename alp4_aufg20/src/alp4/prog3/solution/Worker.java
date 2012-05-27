@@ -28,6 +28,28 @@ class Worker extends Thread {
 		this.barrier = barrier;
 	}
 
+
+	public void run() {
+
+		System.out.println("WAITING says:" + name);
+		try {
+			barrier.await();
+			this.work();
+			System.out.println("WORKING HARD NOW says:" + name);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (BrokenBarrierException e) {
+			e.printStackTrace();
+		}
+		System.out.println("FINISHED says: " + name);
+	}
+	
+	
+	
+	
+	
+	
+	
 	public static class IntTupel {
 		final public int y;
 		final public int x;
@@ -107,20 +129,5 @@ class Worker extends Thread {
 		
 		int newMax = (y*this.image.length) + x; 
 		return newMax >= oldMaximum ? newMax : oldMaximum; 
-	}
-
-	public void run() {
-
-		System.out.println("WAITING says:" + name);
-		try {
-			barrier.await();
-			this.work();
-			System.out.println("WORKING HARD NOW says:" + name);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (BrokenBarrierException e) {
-			e.printStackTrace();
-		}
-		System.out.println("FINISHED says: " + name);
 	}
 }
