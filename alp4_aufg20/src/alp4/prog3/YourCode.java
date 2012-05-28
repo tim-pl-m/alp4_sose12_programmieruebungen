@@ -1,8 +1,9 @@
 package alp4.prog3;
 
 import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
-import alp4.prog3.solution.BarrierTest;
+import alp4.prog3.solution.Worker;
 
 /* 
 	This file is just a proposal, you may change it at your convenience.
@@ -29,11 +30,18 @@ public class YourCode {
 		@Override
 		public void process(int[][] image, int[][] label)
 		{
-			
-			BarrierTest barrierTest = new BarrierTest(); 
-			barrierTest.testCyclicBarrier(image, label); 
+	    	int numberOfWorkers = 4; 
+	    	
+	    	CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers+1);
+
+	        for (int i = 0; i < numberOfWorkers; i++) {
+	            Worker worker = new Worker("Thread_"+i, image, label, 0, image[0].length, barrier);
+	            worker.start();
+	        }
+	        
+	        
 			try {
-				barrierTest.waitForBarrier();
+				barrier.await(); 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -41,14 +49,6 @@ public class YourCode {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			
-//			// TODO: implement something here...
-//			for(int x = 0, i = 0; x < image.length; x++){
-//				for(int y = 0; y < image[0].length; y++){
-//					label[x][y] = image[x][y];
-//					//label[x][y] = (x < image.length / 2) ? 59 : 63;
-//				}
-//			}
 		}
 	}
 }

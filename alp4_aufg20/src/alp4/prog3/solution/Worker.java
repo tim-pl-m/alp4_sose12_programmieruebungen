@@ -6,7 +6,7 @@ import java.util.Stack;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
-class Worker extends Thread {
+public class Worker extends Thread {
 
 	String name;
 
@@ -31,20 +31,15 @@ class Worker extends Thread {
 
 	public void run() {
 
-		System.out.println("WAITING says:" + name);
 		try {
 			this.work();
 			barrier.await();
-			System.out.println("WORKING HARD NOW says:" + name);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
 			e.printStackTrace();
 		}
-		System.out.println("FINISHED says: " + name);
 	}
-	
-	
 	
 	
 	
@@ -82,10 +77,6 @@ class Worker extends Thread {
 					current = stack.pop(); 
 					if (doneMarker[current.y][current.x] == false) {
 						foundList.add(current);
-
-						/*
-						 * checks hier ausführen
-						 */
 
 						maximum = this.checkForSameArea(current.y-1, current.x, value, stack, maximum); 
 						maximum = this.checkForSameArea(current.y, current.x-1, value, stack, maximum); 
