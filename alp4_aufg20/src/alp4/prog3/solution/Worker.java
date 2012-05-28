@@ -13,8 +13,8 @@ public class Worker extends Thread {
 	int[][] image;
 	int[][] label;
 
-//	int leftBound;
-//	int rightBound;
+	int leftBound;
+	int rightBound;
 
 	CyclicBarrier barrier;
 
@@ -23,8 +23,8 @@ public class Worker extends Thread {
 		this.name = name;
 		this.image = image;
 		this.label = label;
-//		this.leftBound = leftBound;
-//		this.rightBound = rightBound;
+		this.leftBound = leftBound;
+		this.rightBound = rightBound;
 		this.barrier = barrier;
 	}
 
@@ -60,8 +60,7 @@ public class Worker extends Thread {
 		boolean[][] doneMarker = new boolean[image.length][image.length];
 
 		for (int y = 0; y < image.length; y++) {
-
-			for (int x = 0; x < image[y].length; x++) {
+			for (int x = this.leftBound; x <= this.rightBound; x++) {
 				if (doneMarker[y][x] == true)
 					continue;
 
