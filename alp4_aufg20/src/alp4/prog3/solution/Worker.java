@@ -33,8 +33,8 @@ class Worker extends Thread {
 
 		System.out.println("WAITING says:" + name);
 		try {
-			barrier.await();
 			this.work();
+			barrier.await();
 			System.out.println("WORKING HARD NOW says:" + name);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

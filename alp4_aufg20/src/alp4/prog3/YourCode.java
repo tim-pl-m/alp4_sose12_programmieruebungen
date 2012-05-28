@@ -1,5 +1,7 @@
 package alp4.prog3;
 
+import java.util.concurrent.BrokenBarrierException;
+
 import alp4.prog3.solution.BarrierTest;
 
 /* 
@@ -30,6 +32,15 @@ public class YourCode {
 			
 			BarrierTest barrierTest = new BarrierTest(); 
 			barrierTest.testCyclicBarrier(image, label); 
+			try {
+				barrierTest.waitForBarrier();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BrokenBarrierException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 			
 //			// TODO: implement something here...
 //			for(int x = 0, i = 0; x < image.length; x++){

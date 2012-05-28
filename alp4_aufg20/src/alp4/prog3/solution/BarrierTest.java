@@ -6,12 +6,13 @@ import java.util.concurrent.CyclicBarrier;
 
 public class BarrierTest {
 
-
+	CyclicBarrier barrier; 
+	
     public void testCyclicBarrier(int[][] image, int[][] label) {
     	
     	int numberOfWorkers = 1; 
     	
-        CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers, new Runnable() {
+        this.barrier = new CyclicBarrier(numberOfWorkers+1, new Runnable() {
                 public void run() {
                     try {
                         System.out.println("START Barrier Action ....");
@@ -26,12 +27,12 @@ public class BarrierTest {
         for (int i = 0; i < numberOfWorkers; i++) {
             Worker worker = new Worker("Thread_"+i, image, label, 0, image[0].length, barrier);
             worker.start();
-            try {
-				worker.join();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+//            try {
+//				worker.join();
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} 
         }
 
     }
@@ -97,6 +98,10 @@ public class BarrierTest {
     		System.out.println();
     	}
     }
+
+	public void waitForBarrier() throws InterruptedException, BrokenBarrierException {
+		this.barrier.await(); 
+	}
 
 //    public static void main(String[] args) {
 //        BarrierTest t = new BarrierTest();
