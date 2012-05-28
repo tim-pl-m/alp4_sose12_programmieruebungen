@@ -27,7 +27,8 @@ public class YourCode {
 	private static class MyLabeler implements ILabeler {
 		@Override
 		public void process(int[][] image, int[][] label) {
-			int numberOfWorkers = 1;
+			
+	    	int numberOfWorkers = 4;
 
 			CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers + 1);
 
@@ -37,14 +38,10 @@ public class YourCode {
 				int leftBound = i * sliceLength;
 
 				int rightBound;
-				if (i == numberOfWorkers) {
-					rightBound = ((i + 1) * sliceLength) - 1;
-				} else {
-					rightBound = image[0].length - 1;
-				}
+				rightBound = ((i + 1) * sliceLength) - 1;
 
-				Worker worker = new Worker("Thread_" + i, image, label, 0,
-						image[0].length, barrier);
+				Worker worker = new Worker("Thread_" + i, image, label, leftBound,
+						rightBound, barrier);
 				worker.start();
 
 				try {
