@@ -28,7 +28,7 @@ public class YourCode {
 		@Override
 		public void process(int[][] image, int[][] label) {
 			
-	    	int numberOfWorkers = 4;
+	    	int numberOfWorkers = 50;
 
 			CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers + 1);
 
@@ -43,16 +43,16 @@ public class YourCode {
 				Worker worker = new Worker("Thread_" + i, image, label, leftBound,
 						rightBound, barrier);
 				worker.start();
-
-				try {
-					barrier.await();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (BrokenBarrierException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			}
+			
+			try {
+				barrier.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BrokenBarrierException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
