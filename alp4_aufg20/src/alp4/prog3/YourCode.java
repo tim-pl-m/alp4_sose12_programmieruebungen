@@ -37,8 +37,7 @@ public class YourCode {
 			for (int i = 0; i < numberOfWorkers; i++) {
 				int leftBound = i * sliceLength;
 
-				int rightBound;
-				rightBound = ((i + 1) * sliceLength) - 1;
+				int rightBound = ((i + 1) * sliceLength) - 1;
 
 				Worker worker = new Worker("Thread_" + i, image, label, leftBound,
 						rightBound, barrier);
@@ -47,12 +46,43 @@ public class YourCode {
 			
 			try {
 				barrier.await();
+				
+				for(int i = numberOfWorkers-2; i > -1; i--)
+				{				
+					int leftBound = i * sliceLength;
+					int rightBound = ((i + 1) * sliceLength) - 1;
+					
+					for(int y = 0; y < label.length; y++)
+					{
+						if(image[y][rightBound+1] == image[y][rightBound])
+						{
+							int oldLabelValue = label[y][rightBound]; 
+							int newLabelValue = label[y][rightBound+1]; 
+							updateLabelValuesForSlice(label, leftBound, rightBound, oldLabelValue, newLabelValue); 
+						}
+					}
+					
+				}
+				
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (BrokenBarrierException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			}
+		}
+
+		private void updateLabelValuesForSlice(int[][] label, int leftBound, int rightBound,
+				int oldLabelValue, int newLabelValue) {
+			
+			for(int y = 0; y < label.length; y++)
+			{
+				for(int x = leftBound; x <= rightBound; x++)
+				{
+					if(label[y][x] == oldLabelValue)
+						label[y][x] = newLabelValue; 
+				}
 			}
 		}
 	}
