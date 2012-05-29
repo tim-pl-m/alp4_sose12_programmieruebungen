@@ -26,23 +26,11 @@ public class YourCode {
 
 	private static class MyLabeler implements ILabeler {
 		@Override
-		public void process(int[][] image2, int[][] label2) {
+		public void process(int[][] image, int[][] label) {
 			
-
-	    	int[][] image = {
-	    			{4,4,4,4,3,3}, 
-	    			{1,4,3,4,4,4}, 
-	    			{1,5,2,2,2,4}, 
-	    			{4,4,4,5,2,4}, 
-	    			{5,5,4,4,4,4}, 
-	    			{5,4,4,3,4,3}, 
-	    			}; 
-
-	    	int n = image.length; 
-	    	int[][] label = new int[n][n]; 
-	    	
-	    	
-	    	int numberOfWorkers = 3;
+			
+			
+	    	int numberOfWorkers = 50;
 
 			CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers + 1);
 
@@ -76,14 +64,6 @@ public class YourCode {
 						}
 					}
 				}
-				
-
-
-		    	System.out.println("Image: ");
-		    	printArray(image); 
-
-		    	System.out.println("Label: ");
-		    	printArray(label); 
 		    	
 		    	
 		    	
@@ -111,19 +91,4 @@ public class YourCode {
 		}
 	}
 	
-
-    public static void printArray(int[][] arr)
-    {
-    	int n = arr.length; 
-    	
-    	for(int y = 0; y < n; y++)
-    	{
-    		for(int x = 0; x < n; x++)
-    		{
-    			System.out.print(arr[y][x] + " ");
-    		}
-    		System.out.println();
-    	}
-    }
-
 }
