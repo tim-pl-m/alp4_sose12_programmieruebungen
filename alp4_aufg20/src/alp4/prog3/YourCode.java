@@ -28,6 +28,8 @@ public class YourCode {
 		@Override
 		public void process(int[][] image, int[][] label) {
 			
+			long startTime = System.currentTimeMillis();
+
 			
 			
 	    	int numberOfWorkers = 50;
@@ -75,6 +77,14 @@ public class YourCode {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+
+			long endTime   = System.currentTimeMillis();
+
+			long totalTime = endTime - startTime;
+			
+			System.out.println("Time for " + numberOfWorkers + ": " + totalTime);
+			
 		}
 
 		private void updateLabelValuesForSlice(int[][] label, int leftBound, int rightBound,
