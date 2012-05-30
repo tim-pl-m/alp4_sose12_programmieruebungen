@@ -43,7 +43,7 @@ import java.util.concurrent.CyclicBarrier;
 
 public class Worker extends Thread {
 
-	String name;
+	int workerId;
 
 	int[][] image;
 	int[][] label;
@@ -56,10 +56,10 @@ public class Worker extends Thread {
 	CyclicBarrier barrier1;
 	CyclicBarrier barrier2;
 
-	public Worker(String name, int[][] image, int[][] label, 
+	public Worker(int workerId, int[][] image, int[][] label, 
 			TerminatedFlagWrapper terminatedFlagWrapper, 
 			CyclicBarrier barrier1, CyclicBarrier barrier2) {
-		this.name = name;
+		this.workerId = workerId;
 		this.image = image;
 		this.label = label;
 		this.terminatedFlagWrapper = terminatedFlagWrapper; 

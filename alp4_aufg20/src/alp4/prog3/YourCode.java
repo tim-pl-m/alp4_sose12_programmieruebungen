@@ -44,7 +44,10 @@ public class YourCode {
 			long startTime = System.currentTimeMillis();
 
 			int numberOfWorkers = 1;
-			
+
+			int[] foundYStartPositions = new int[numberOfWorkers];
+			int[] foundXStartPositions = new int[numberOfWorkers];
+			int[] foundStartValues = new int[numberOfWorkers];
 
 			TerminatedFlagWrapper terminatedFlagWrapper = new TerminatedFlagWrapper(false);
 			
@@ -58,9 +61,6 @@ public class YourCode {
 			try {
 
 				while (terminatedFlagWrapper.terminated == false) {
-					int[] foundYStartPositions = new int[image.length];
-					int[] foundXStartPositions = new int[image[0].length];
-					int[] foundStartValues = new int[image[0].length];
 					int foundStartPositionForThreadNumber = 0;
 
 					for (int y = image.length - 1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--) {
