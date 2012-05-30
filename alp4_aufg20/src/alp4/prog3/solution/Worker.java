@@ -134,7 +134,7 @@ public class Worker extends Thread {
 			this.checkForSameArea(curField.y+1, curField.x, valueToCompare, areaValueForLabel, stack); 			
 		}
 		
-		this.image[this.foundYStartPositions[this.workerId]][this.foundXStartPositions[this.workerId]] = -1; 
+		this.image[y][x] = -1; 
 		this.foundYStartPositions[this.workerId] = -1; 
 		this.foundXStartPositions[this.workerId] = -1; 
 
