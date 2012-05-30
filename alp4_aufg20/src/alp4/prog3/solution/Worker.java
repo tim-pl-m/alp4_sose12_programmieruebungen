@@ -48,6 +48,10 @@ public class Worker extends Thread {
 	int[][] image;
 	int[][] label;
 
+	int[] foundYStartPositions;
+	int[] foundXStartPositions;
+	int[] foundStartValues;
+	
 	int leftBound;
 	int rightBound;
 	
@@ -55,13 +59,18 @@ public class Worker extends Thread {
 
 	CyclicBarrier barrier1;
 	CyclicBarrier barrier2;
-
+	
+	
 	public Worker(int workerId, int[][] image, int[][] label, 
+			int[] foundYStartPositions, int[] foundXStartPositions, int[] foundStartValues, 
 			TerminatedFlagWrapper terminatedFlagWrapper, 
 			CyclicBarrier barrier1, CyclicBarrier barrier2) {
 		this.workerId = workerId;
 		this.image = image;
 		this.label = label;
+		this.foundYStartPositions = foundYStartPositions; 
+		this.foundXStartPositions = foundXStartPositions;
+		this.foundStartValues = foundStartValues; 
 		this.terminatedFlagWrapper = terminatedFlagWrapper; 
 		this.barrier1 = barrier1;
 		this.barrier2 = barrier2;
@@ -96,6 +105,71 @@ public class Worker extends Thread {
 		}
 	}
 	
+
+	public void work() {
+
+		Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
+		
+		stack.push(new IntTupel(this.foundYStartPositions[this.workerId], this.foundXStartPositions[this.workerId]));
+		
+		while(!stack.empty())
+		{
+			IntTupel curField = stack.pop(); 
+			
+			
+			
+		}
+		
+				
+
+	}
+	
+	
+//	public void work() {
+//
+//		boolean[][] doneMarker = new boolean[image.length][image.length];
+//
+//		for (int y = 0; y < image.length; y++) {
+//			for (int x = this.leftBound; x <= this.rightBound; x++) {
+//				if (doneMarker[y][x] == true)
+//					continue;
+//
+//				int value = this.image[y][x];
+//				List<IntTupel> foundList = new LinkedList<IntTupel>();
+//				Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
+//
+//				int maximum = (y*this.image.length) + x; 
+//				stack.push(new IntTupel(y, x));
+//
+//				IntTupel current;
+//				while ( ! stack.isEmpty() ) {
+//					current = stack.pop(); 
+//					if (doneMarker[current.y][current.x] == false) {
+//						foundList.add(current);
+//
+//						maximum = this.checkForSameArea(current.y-1, current.x, value, stack, maximum); 
+//						maximum = this.checkForSameArea(current.y, current.x-1, value, stack, maximum); 
+//						maximum = this.checkForSameArea(current.y, current.x+1, value, stack, maximum); 
+//						maximum = this.checkForSameArea(current.y+1, current.x, value, stack, maximum); 
+//
+//						doneMarker[current.y][current.x] = true;
+//
+//					}
+//					
+//				}
+//
+//				// kopiere an alle stellen aus foundList in label jeweils das maximum
+//				for(IntTupel current2: foundList)
+//				{
+//					label[current2.y][current2.x] = maximum; 
+//				}
+//
+//			}
+//		}
+//
+//	}
+
+	
 	
 	
 	
@@ -109,70 +183,26 @@ public class Worker extends Thread {
 			this.x = x;
 		}
 	}
-
-	public void work() {
-
-		boolean[][] doneMarker = new boolean[image.length][image.length];
-
-		for (int y = 0; y < image.length; y++) {
-			for (int x = this.leftBound; x <= this.rightBound; x++) {
-				if (doneMarker[y][x] == true)
-					continue;
-
-				int value = this.image[y][x];
-				List<IntTupel> foundList = new LinkedList<IntTupel>();
-				Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
-
-				int maximum = (y*this.image.length) + x; 
-				stack.push(new IntTupel(y, x));
-
-				IntTupel current;
-				while ( ! stack.isEmpty() ) {
-					current = stack.pop(); 
-					if (doneMarker[current.y][current.x] == false) {
-						foundList.add(current);
-
-						maximum = this.checkForSameArea(current.y-1, current.x, value, stack, maximum); 
-						maximum = this.checkForSameArea(current.y, current.x-1, value, stack, maximum); 
-						maximum = this.checkForSameArea(current.y, current.x+1, value, stack, maximum); 
-						maximum = this.checkForSameArea(current.y+1, current.x, value, stack, maximum); 
-
-						doneMarker[current.y][current.x] = true;
-
-					}
-					
-				}
-
-				// kopiere an alle stellen aus foundList in label jeweils das maximum
-				for(IntTupel current2: foundList)
-				{
-					label[current2.y][current2.x] = maximum; 
-				}
-
-			}
-		}
-
-	}
 	
-	// returns the new maximum
-	public int checkForSameArea(int y, int x, int value, Stack<IntTupel> stack, int oldMaximum)
-	{
-		if(y >= image.length || y < 0)
-		{
-			return oldMaximum; 
-		}
-		if(x >= image[y].length || x < 0)
-		{
-			return oldMaximum; 
-		}
-		
-		if(image[y][x] != value)
-			return oldMaximum; 
-		
-		
-		stack.push(new IntTupel(y, x)); 
-		
-		int newMax = (y*this.image.length) + x; 
-		return newMax >= oldMaximum ? newMax : oldMaximum; 
-	}
+//	// returns the new maximum
+//	public int checkForSameArea(int y, int x, int value, Stack<IntTupel> stack, int oldMaximum)
+//	{
+//		if(y >= image.length || y < 0)
+//		{
+//			return oldMaximum; 
+//		}
+//		if(x >= image[y].length || x < 0)
+//		{
+//			return oldMaximum; 
+//		}
+//		
+//		if(image[y][x] != value)
+//			return oldMaximum; 
+//		
+//		
+//		stack.push(new IntTupel(y, x)); 
+//		
+//		int newMax = (y*this.image.length) + x; 
+//		return newMax >= oldMaximum ? newMax : oldMaximum; 
+//	}
 }

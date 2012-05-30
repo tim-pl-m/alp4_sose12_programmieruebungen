@@ -51,11 +51,18 @@ public class YourCode {
 
 			TerminatedFlagWrapper terminatedFlagWrapper = new TerminatedFlagWrapper(false);
 			
-			// worker anlegen
 			
-//			CyclicBarrier barrierStart = new CyclicBarrier(numberOfWorkers + 1);
 			CyclicBarrier barrier1 = new CyclicBarrier(numberOfWorkers + 1);
 			CyclicBarrier barrier2 = new CyclicBarrier(numberOfWorkers + 1);
+			
+			
+			// worker anlegen
+			for(int i = 0; i < numberOfWorkers; i++)
+			{
+				Worker worker = new Worker(i, image, label, foundYStartPositions, foundXStartPositions, foundStartValues, terminatedFlagWrapper, barrier1, barrier2); 
+				worker.start(); 
+			}
+			
 
 			
 			try {
