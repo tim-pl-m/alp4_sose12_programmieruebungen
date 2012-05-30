@@ -108,6 +108,9 @@ public class Worker extends Thread {
 
 	public void work() {
 
+		if(this.foundYStartPositions[this.workerId] == -1 || this.foundXStartPositions[this.workerId] == -1)
+			return; 
+		
 		Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
 		
 		stack.push(new IntTupel(this.foundYStartPositions[this.workerId], this.foundXStartPositions[this.workerId]));
@@ -116,9 +119,16 @@ public class Worker extends Thread {
 		{
 			IntTupel curField = stack.pop(); 
 			
+			image[curField.y][curField.x] = -1; 
 			
+//			if(image)
 			
 		}
+		
+		
+		this.image[this.foundYStartPositions[this.workerId]][this.foundXStartPositions[this.workerId]] = -1; 
+		this.foundYStartPositions[this.workerId] = -1; 
+		this.foundXStartPositions[this.workerId] = -1; 
 		
 				
 
@@ -184,25 +194,24 @@ public class Worker extends Thread {
 		}
 	}
 	
-//	// returns the new maximum
-//	public int checkForSameArea(int y, int x, int value, Stack<IntTupel> stack, int oldMaximum)
-//	{
-//		if(y >= image.length || y < 0)
-//		{
-//			return oldMaximum; 
-//		}
-//		if(x >= image[y].length || x < 0)
-//		{
-//			return oldMaximum; 
-//		}
-//		
-//		if(image[y][x] != value)
-//			return oldMaximum; 
-//		
-//		
-//		stack.push(new IntTupel(y, x)); 
-//		
-//		int newMax = (y*this.image.length) + x; 
-//		return newMax >= oldMaximum ? newMax : oldMaximum; 
-//	}
+	public int checkForSameArea(int y, int x, int value, Stack<IntTupel> stack, int oldMaximum)
+	{
+		if(y >= image.length || y < 0)
+		{
+			return oldMaximum; 
+		}
+		if(x >= image[y].length || x < 0)
+		{
+			return oldMaximum; 
+		}
+		
+		if(image[y][x] != value)
+			return oldMaximum; 
+		
+		
+		stack.push(new IntTupel(y, x)); 
+		
+		int newMax = (y*this.image.length) + x; 
+		return newMax >= oldMaximum ? newMax : oldMaximum; 
+	}
 }
