@@ -39,59 +39,57 @@ public class YourCode {
 		
 		@Override
 		public void process(int[][] image, int[][] label) {
-			
+
 			long startTime = System.currentTimeMillis();
 
+			int numberOfWorkers = 1;
 			
-			int numberOfWorkers = 1; 
+			// worker anlegen
 			
-			boolean terminated = false; 
-			
-			
-			while(terminated == false)
-			{
-				int[] foundYStartPositions = new int[image.length]; 
-				int[] foundXStartPositions = new int[image[0].length]; 
-				int[] foundStartValues = new int[image[0].length]; 
-				int foundStartPositionForThreadNumber = 0; 
-				
-				for(int y = image.length-1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--)
-				{
-					for(int x = image[0].length-1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--)
-					{
-						int value = image[y][x]; 
-						
-						if(value == -1)
-							continue; 
-						
-						
-						if( ! isValueIn(value, foundStartValues)) // if value noch nicht in foundStartPositions drin ist 
-						{
-							foundYStartPositions[foundStartPositionForThreadNumber] = y; 
-							foundXStartPositions[foundStartPositionForThreadNumber] = x; 
-							foundStartValues[foundStartPositionForThreadNumber] = value; 
-							foundStartPositionForThreadNumber++; 
-						}
-						
-					}
-				}
-				
-				
-				//worker anlegen
-				
-				//barrier1.await
-				
-				
-				if(foundStartPositionForThreadNumber == 0)
-					terminated = true; 
+//			CyclicBarrier barrierStart = new CyclicBarrier(numberOfWorkers + 1);
+			CyclicBarrier barrier1 = new CyclicBarrier(numberOfWorkers + 1);
+			CyclicBarrier barrier2 = new CyclicBarrier(numberOfWorkers + 1);
 
-				//barrier2.await
-			}
 			
-			
-			
-			
-			
+			try {
+
+				boolean terminated = false;
+
+				while (terminated == false) {
+					int[] foundYStartPositions = new int[image.length];
+					int[] foundXStartPositions = new int[image[0].length];
+					int[] foundStartValues = new int[image[0].length];
+					int foundStartPositionForThreadNumber = 0;
+
+					for (int y = image.length - 1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--) {
+						for (int x = image[0].length - 1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--) {
+							int value = image[y][x];
+
+							if (value == -1)
+								continue;
+
+							if (!isValueIn(value, foundStartValues)) 
+							{
+								foundYStartPositions[foundStartPositionForThreadNumber] = y;
+								foundXStartPositions[foundStartPositionForThreadNumber] = x;
+								foundStartValues[foundStartPositionForThreadNumber] = value;
+								foundStartPositionForThreadNumber++;
+							}
+
+						}
+					}
+
+					if (foundStartPositionForThreadNumber == 0)
+						terminated = true;
+
+
+					barrier1.await(); 
+
+					barrier2.await(); 
+					
+
+					
+				}
 			
 			
 			
@@ -150,12 +148,21 @@ public class YourCode {
 //			}
 			
 
-			long endTime   = System.currentTimeMillis();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (BrokenBarrierException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			long endTime = System.currentTimeMillis();
 
 			long totalTime = endTime - startTime;
-			
-			System.out.println("Time for " + numberOfWorkers + ": " + totalTime);
-			
+
+			System.out
+					.println("Time for " + numberOfWorkers + ": " + totalTime);
+
 		}
 
 		private void updateLabelValuesForSlice(int[][] label, int leftBound, int rightBound,

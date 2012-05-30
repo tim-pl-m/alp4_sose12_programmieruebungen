@@ -51,24 +51,35 @@ public class Worker extends Thread {
 	int leftBound;
 	int rightBound;
 
-	CyclicBarrier barrier;
+	CyclicBarrier barrier1;
+	CyclicBarrier barrier2;
 
 	public Worker(String name, int[][] image, int[][] label, int leftBound,
-			int rightBound, CyclicBarrier barrier) {
+			int rightBound, CyclicBarrier barrier1, CyclicBarrier barrier2) {
 		this.name = name;
 		this.image = image;
 		this.label = label;
 		this.leftBound = leftBound;
 		this.rightBound = rightBound;
-		this.barrier = barrier;
+		this.barrier1 = barrier1;
+		this.barrier2 = barrier2;
 	}
 
 
 	public void run() {
 
 		try {
+			
+			while(true)
+			{
+				this.barrier1.await(); 
+				
+				if(terminated == true)
+					break; 
+			}
+			
 			this.work();
-			barrier.await();
+			this.barrier1.await();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
