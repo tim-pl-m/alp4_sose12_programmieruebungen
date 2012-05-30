@@ -89,7 +89,7 @@ public class YourCode {
 			}
 			
 
-			
+			int counter = 0; 
 			try {
 
 				while (terminatedFlagWrapper.terminated == false) {
@@ -98,7 +98,7 @@ public class YourCode {
 					for (int y = image.length - 1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--) {
 						for (int x = image[0].length - 1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--) {
 							
-
+							counter++; 
 							
 							System.out.println();
 							System.out.println("y: " + y);
@@ -128,6 +128,18 @@ public class YourCode {
 						}
 					}
 
+
+//					if (foundStartPositionForThreadNumber == 0) {
+//						terminatedFlagWrapper.terminated = true;
+//						for (int y = image.length - 1; y >= 0; y--) {
+//							for (int x = image[0].length - 1; x >= 0; x--) {
+//								if (image[y][x] != -1)
+//									terminatedFlagWrapper.terminated = false;
+//							}
+//						}
+//					}
+					
+					
 					if (foundStartPositionForThreadNumber == 0)
 						terminatedFlagWrapper.terminated = true;
 

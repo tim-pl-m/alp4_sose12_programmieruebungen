@@ -137,6 +137,7 @@ public class Worker extends Thread {
 		this.image[y][x] = -1; 
 		this.foundYStartPositions[this.workerId] = -1; 
 		this.foundXStartPositions[this.workerId] = -1; 
+		this.foundStartValues[this.workerId] = -1; 
 
 	}
 	
