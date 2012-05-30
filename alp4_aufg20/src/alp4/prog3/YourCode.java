@@ -82,6 +82,7 @@ public class YourCode {
 								foundYStartPositions[foundStartPositionForThreadNumber] = y;
 								foundXStartPositions[foundStartPositionForThreadNumber] = x;
 								foundStartValues[foundStartPositionForThreadNumber] = value;
+								
 								foundStartPositionForThreadNumber++;
 							}
 
