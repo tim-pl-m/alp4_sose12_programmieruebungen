@@ -53,6 +53,12 @@ public class YourCode {
 	    	int n = image.length; 
 	    	int[][] label = new int[n][n]; 
 	    	
+
+	    	System.out.println("Image: ");
+	    	printArray(image); 
+	    	
+	    	
+	    	
 			
 			long startTime = System.currentTimeMillis();
 
@@ -185,9 +191,34 @@ public class YourCode {
 
 			System.out
 					.println("Time for " + numberOfWorkers + ": " + totalTime);
+			
+			
+
+	    	System.out.println("Image after: ");
+	    	printArray(image); 
+	    	
+
+	    	System.out.println("Label: ");
+	    	printArray(label); 
+	    	
 
 		}
 
+
+	    public static void printArray(int[][] arr)
+	    {
+	    	int n = arr.length; 
+	    	
+	    	for(int y = 0; y < n; y++)
+	    	{
+	    		for(int x = 0; x < n; x++)
+	    		{
+	    			System.out.print(arr[y][x] + " ");
+	    		}
+	    		System.out.println();
+	    	}
+	    }
+	    
 		private void updateLabelValuesForSlice(int[][] label, int leftBound, int rightBound,
 				int oldLabelValue, int newLabelValue) {
 			
