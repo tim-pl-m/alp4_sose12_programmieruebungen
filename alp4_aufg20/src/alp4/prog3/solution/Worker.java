@@ -111,20 +111,27 @@ public class Worker extends Thread {
 		if(this.foundYStartPositions[this.workerId] == -1 || this.foundXStartPositions[this.workerId] == -1)
 			return; 
 		
+		int valueToCompare = this.foundStartValues[this.workerId]; 
+		int y = this.foundYStartPositions[this.workerId];
+		int x = this.foundXStartPositions[this.workerId]; 
+				
 		Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
 		
-		image[this.foundYStartPositions[this.workerId]][this.foundXStartPositions[this.workerId]] = -1; 
+		int areaValueForLabel = (y*this.image.length) + x; 
+
+		
+		this.image[y][x] = -1; 
+		this.label[this.foundYStartPositions[this.workerId]][this.foundXStartPositions[this.workerId]] = areaValueForLabel; 
 		stack.push(new IntTupel(this.foundYStartPositions[this.workerId], this.foundXStartPositions[this.workerId]));
 
 		while(!stack.empty())
 		{
 			IntTupel curField = stack.pop(); 
 
-			int valueToCompare = this.foundStartValues[this.workerId]; 
-			this.checkForSameArea(curField.y-1, curField.x, valueToCompare, stack); 
-			this.checkForSameArea(curField.y, curField.x-1, valueToCompare, stack); 
-			this.checkForSameArea(curField.y, curField.x+1, valueToCompare, stack); 
-			this.checkForSameArea(curField.y+1, curField.x, valueToCompare, stack); 			
+			this.checkForSameArea(curField.y-1, curField.x, valueToCompare, areaValueForLabel, stack); 
+			this.checkForSameArea(curField.y, curField.x-1, valueToCompare, areaValueForLabel, stack); 
+			this.checkForSameArea(curField.y, curField.x+1, valueToCompare, areaValueForLabel, stack); 
+			this.checkForSameArea(curField.y+1, curField.x, valueToCompare, areaValueForLabel, stack); 			
 		}
 		
 		this.image[this.foundYStartPositions[this.workerId]][this.foundXStartPositions[this.workerId]] = -1; 
@@ -193,7 +200,7 @@ public class Worker extends Thread {
 		}
 	}
 	
-	public void checkForSameArea(int y, int x, int value, Stack<IntTupel> stack)
+	public void checkForSameArea(int y, int x, int value, int areaValueForLabel, Stack<IntTupel> stack)
 	{
 		if(y >= image.length || y < 0)
 			return; 
@@ -207,6 +214,7 @@ public class Worker extends Thread {
 		else
 		{
 			image[y][x] = -1; 
+			label[y][x] = areaValueForLabel; 
 			stack.push(new IntTupel(y, x)); 
 		}
 	}
