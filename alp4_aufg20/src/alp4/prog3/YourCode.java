@@ -32,6 +32,62 @@ public class YourCode {
 
 			
 			int numberOfWorkers = 1; 
+			
+			boolean terminated = false; 
+			
+			
+			while(terminated == false)
+			{
+				int[] foundYStartPositions = new int[image.length]; 
+				int[] foundXStartPositions = new int[image[0].length]; 
+				int foundStartPositionForThreadNumber = 0; 
+				
+				for(int y = image.length-1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--)
+				{
+					for(int x = image[0].length-1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--)
+					{
+						int value = image[y][x]; 
+						
+						if(value == -1)
+							continue; 
+						
+						
+						if(true) // if value noch nicht in foundStartPositions drin ist 
+						{
+							foundYStartPositions[foundStartPositionForThreadNumber] = y; 
+							foundXStartPositions[foundStartPositionForThreadNumber] = x; 
+							foundStartPositionForThreadNumber++; 
+						}
+						
+					}
+				}
+				
+				
+				//worker anlegen
+				
+				//barrier1.await
+				
+				
+				if(foundStartPositionForThreadNumber == 0)
+					terminated = true; 
+
+				//barrier2.await
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 //			int currentY = image.length-1; 
 //			int currentX = image[0].length-1;  
