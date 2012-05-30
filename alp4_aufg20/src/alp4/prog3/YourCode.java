@@ -25,6 +25,18 @@ public class YourCode {
 	}
 
 	private static class MyLabeler implements ILabeler {
+
+		public boolean isValueIn(int value, int[] array)
+		{
+			for(int i = 0; i < array.length; i++)
+			{
+				if(array[i] == value)
+					return true; 
+			}
+			
+			return false; 
+		}
+		
 		@Override
 		public void process(int[][] image, int[][] label) {
 			
@@ -40,6 +52,7 @@ public class YourCode {
 			{
 				int[] foundYStartPositions = new int[image.length]; 
 				int[] foundXStartPositions = new int[image[0].length]; 
+				int[] foundStartValues = new int[image[0].length]; 
 				int foundStartPositionForThreadNumber = 0; 
 				
 				for(int y = image.length-1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--)
@@ -52,10 +65,11 @@ public class YourCode {
 							continue; 
 						
 						
-						if(true) // if value noch nicht in foundStartPositions drin ist 
+						if( ! isValueIn(value, foundStartValues)) // if value noch nicht in foundStartPositions drin ist 
 						{
 							foundYStartPositions[foundStartPositionForThreadNumber] = y; 
 							foundXStartPositions[foundStartPositionForThreadNumber] = x; 
+							foundStartValues[foundStartPositionForThreadNumber] = value; 
 							foundStartPositionForThreadNumber++; 
 						}
 						
@@ -82,36 +96,6 @@ public class YourCode {
 			
 			
 			
-			
-			
-			
-			
-			
-			
-
-//			int currentY = image.length-1; 
-//			int currentX = image[0].length-1;  
-
-			int[] foundYStartPositions = new int[image.length]; 
-			int[] foundXStartPositions = new int[image[0].length]; 
-			int numberOfFoundStartPositions = 0; 
-			
-			
-			for(int y = image.length-1; y >= 0; y--)
-			{
-				for(int x = image[0].length-1; x >= 0; x--)
-				{
-					int value = image[y][x]; 
-					
-					if(value == -1)
-						continue; 
-					
-					if()
-					
-					
-					
-				}
-			}
 			
 			
 			
