@@ -97,6 +97,20 @@ public class YourCode {
 
 					for (int y = image.length - 1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--) {
 						for (int x = image[0].length - 1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--) {
+							
+
+							
+							System.out.println();
+							System.out.println("y: " + y);
+							System.out.println("x: " + x);
+							System.out.println("foundStartPositionForThreadNumber: " + foundStartPositionForThreadNumber);
+
+							System.out.println("Image: ");
+					    	printArray(image); 
+					    	
+					    	System.out.println("Label: ");
+					    	printArray(label); 
+							
 							int value = image[y][x];
 
 //							if (value == -1)
