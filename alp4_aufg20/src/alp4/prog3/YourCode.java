@@ -31,52 +31,83 @@ public class YourCode {
 			long startTime = System.currentTimeMillis();
 
 			
+			int numberOfWorkers = 1; 
+
+//			int currentY = image.length-1; 
+//			int currentX = image[0].length-1;  
+
+			int[] foundYStartPositions = new int[image.length]; 
+			int[] foundXStartPositions = new int[image[0].length]; 
+			int numberOfFoundStartPositions = 0; 
 			
-	    	int numberOfWorkers = 50;
-
-			CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers + 1);
-
-			int sliceLength = image[0].length / numberOfWorkers;
-
-			for (int i = 0; i < numberOfWorkers; i++) {
-				int leftBound = i * sliceLength;
-
-				int rightBound = ((i + 1) * sliceLength) - 1;
-
-				Worker worker = new Worker("Thread_" + i, image, label, leftBound,
-						rightBound, barrier);
-				worker.start();
-			}
 			
-			try {
-				barrier.await();
-				
-				for(int i = numberOfWorkers-2; i > -1; i--)
-				{				
-					int leftBound = i * sliceLength;
-					int rightBound = ((i + 1) * sliceLength) - 1;
+			for(int y = image.length-1; y >= 0; y--)
+			{
+				for(int x = image[0].length-1; x >= 0; x--)
+				{
+					int value = image[y][x]; 
 					
-					for(int y = 0; y < label.length; y++)
-					{
-						if(image[y][rightBound+1] == image[y][rightBound])
-						{
-							int oldLabelValue = label[y][rightBound]; 
-							int newLabelValue = label[y][rightBound+1]; 
-							updateLabelValuesForSlice(label, leftBound, rightBound, oldLabelValue, newLabelValue); 
-						}
-					}
+					if(value == -1)
+						continue; 
+					
+					if()
+					
+					
+					
 				}
-		    	
-		    	
-		    	
-				
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (BrokenBarrierException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			
+			
+			
+			
+			
+			
+			
+//	    	int numberOfWorkers = 50;
+//
+//			CyclicBarrier barrier = new CyclicBarrier(numberOfWorkers + 1);
+//
+//			int sliceLength = image[0].length / numberOfWorkers;
+//
+//			for (int i = 0; i < numberOfWorkers; i++) {
+//				int leftBound = i * sliceLength;
+//
+//				int rightBound = ((i + 1) * sliceLength) - 1;
+//
+//				Worker worker = new Worker("Thread_" + i, image, label, leftBound,
+//						rightBound, barrier);
+//				worker.start();
+//			}
+//			
+//			try {
+//				barrier.await();
+//				
+//				for(int i = numberOfWorkers-2; i > -1; i--)
+//				{				
+//					int leftBound = i * sliceLength;
+//					int rightBound = ((i + 1) * sliceLength) - 1;
+//					
+//					for(int y = 0; y < label.length; y++)
+//					{
+//						if(image[y][rightBound+1] == image[y][rightBound])
+//						{
+//							int oldLabelValue = label[y][rightBound]; 
+//							int newLabelValue = label[y][rightBound+1]; 
+//							updateLabelValuesForSlice(label, leftBound, rightBound, oldLabelValue, newLabelValue); 
+//						}
+//					}
+//				}
+//		    	
+//		    	
+//		    	
+//				
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (BrokenBarrierException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 			
 
 			long endTime   = System.currentTimeMillis();

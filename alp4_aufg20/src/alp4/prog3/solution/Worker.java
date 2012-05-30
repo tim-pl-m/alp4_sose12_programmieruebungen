@@ -13,6 +13,7 @@ import java.util.concurrent.CyclicBarrier;
  *   weise jedem worker ein startfeld (die koordinaten) zu
  *    jeder worker findet und markiert alle felder aus dem gebiet, in welchem sein startfeld liegt, 
  *    und setzt für jedes dieser felder den labelwert auf den positionwert seines startfeldes
+ *    markiere dabei jedes besuchte feld mit -1
  *   
  *   barrier1.await
  *   
