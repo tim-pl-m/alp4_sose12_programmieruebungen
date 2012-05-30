@@ -3,6 +3,7 @@ package alp4.prog3;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+import alp4.prog3.solution.TerminatedFlagWrapper;
 import alp4.prog3.solution.Worker;
 
 /* 
@@ -44,6 +45,9 @@ public class YourCode {
 
 			int numberOfWorkers = 1;
 			
+
+			TerminatedFlagWrapper terminatedFlagWrapper = new TerminatedFlagWrapper(false);
+			
 			// worker anlegen
 			
 //			CyclicBarrier barrierStart = new CyclicBarrier(numberOfWorkers + 1);
@@ -53,9 +57,7 @@ public class YourCode {
 			
 			try {
 
-				boolean terminated = false;
-
-				while (terminated == false) {
+				while (terminatedFlagWrapper.terminated == false) {
 					int[] foundYStartPositions = new int[image.length];
 					int[] foundXStartPositions = new int[image[0].length];
 					int[] foundStartValues = new int[image[0].length];
@@ -80,7 +82,7 @@ public class YourCode {
 					}
 
 					if (foundStartPositionForThreadNumber == 0)
-						terminated = true;
+						terminatedFlagWrapper.terminated = true;
 
 
 					barrier1.await(); 

@@ -50,17 +50,19 @@ public class Worker extends Thread {
 
 	int leftBound;
 	int rightBound;
+	
+	TerminatedFlagWrapper terminatedFlagWrapper; 
 
 	CyclicBarrier barrier1;
 	CyclicBarrier barrier2;
 
-	public Worker(String name, int[][] image, int[][] label, int leftBound,
-			int rightBound, CyclicBarrier barrier1, CyclicBarrier barrier2) {
+	public Worker(String name, int[][] image, int[][] label, 
+			TerminatedFlagWrapper terminatedFlagWrapper, 
+			CyclicBarrier barrier1, CyclicBarrier barrier2) {
 		this.name = name;
 		this.image = image;
 		this.label = label;
-		this.leftBound = leftBound;
-		this.rightBound = rightBound;
+		this.terminatedFlagWrapper = terminatedFlagWrapper; 
 		this.barrier1 = barrier1;
 		this.barrier2 = barrier2;
 	}
@@ -74,7 +76,7 @@ public class Worker extends Thread {
 			{
 				this.barrier1.await(); 
 				
-				if(terminated == true)
+				if(this.terminatedFlagWrapper.terminated == true)
 				{
 					this.barrier2.await(); 
 					break; 
