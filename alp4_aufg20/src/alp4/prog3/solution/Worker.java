@@ -75,11 +75,18 @@ public class Worker extends Thread {
 				this.barrier1.await(); 
 				
 				if(terminated == true)
+				{
+					this.barrier2.await(); 
 					break; 
+				}
+				
+				else
+				{
+					this.work();
+					this.barrier2.await(); 
+				}
 			}
 			
-			this.work();
-			this.barrier1.await();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (BrokenBarrierException e) {
