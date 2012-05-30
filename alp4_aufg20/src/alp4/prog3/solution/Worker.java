@@ -1,7 +1,5 @@
 package alp4.prog3.solution;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
@@ -51,9 +49,6 @@ public class Worker extends Thread {
 	int[] foundYStartPositions;
 	int[] foundXStartPositions;
 	int[] foundStartValues;
-	
-	int leftBound;
-	int rightBound;
 	
 	TerminatedFlagWrapper terminatedFlagWrapper; 
 
@@ -108,21 +103,23 @@ public class Worker extends Thread {
 
 	public void work() {
 
-		if(this.foundYStartPositions[this.workerId] == -1 || this.foundXStartPositions[this.workerId] == -1)
-			return; 
 		
 		int valueToCompare = this.foundStartValues[this.workerId]; 
 		int y = this.foundYStartPositions[this.workerId];
 		int x = this.foundXStartPositions[this.workerId]; 
-				
+		
+		if(y == -1 || x == -1)
+			return; 
+
+		
 		Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
 		
 		int areaValueForLabel = (y*this.image.length) + x; 
 
 		
 		this.image[y][x] = -1; 
-		this.label[this.foundYStartPositions[this.workerId]][this.foundXStartPositions[this.workerId]] = areaValueForLabel; 
-		stack.push(new IntTupel(this.foundYStartPositions[this.workerId], this.foundXStartPositions[this.workerId]));
+		this.label[y][x] = areaValueForLabel; 
+		stack.push(new IntTupel(y, x));
 
 		while(!stack.empty())
 		{
@@ -134,61 +131,12 @@ public class Worker extends Thread {
 			this.checkForSameArea(curField.y+1, curField.x, valueToCompare, areaValueForLabel, stack); 			
 		}
 		
-		this.image[y][x] = -1; 
+//		this.image[y][x] = -1; 
 		this.foundYStartPositions[this.workerId] = -1; 
 		this.foundXStartPositions[this.workerId] = -1; 
 		this.foundStartValues[this.workerId] = -1; 
 
 	}
-	
-	
-//	public void work() {
-//
-//		boolean[][] doneMarker = new boolean[image.length][image.length];
-//
-//		for (int y = 0; y < image.length; y++) {
-//			for (int x = this.leftBound; x <= this.rightBound; x++) {
-//				if (doneMarker[y][x] == true)
-//					continue;
-//
-//				int value = this.image[y][x];
-//				List<IntTupel> foundList = new LinkedList<IntTupel>();
-//				Stack<IntTupel> stack = new Stack<Worker.IntTupel>();
-//
-//				int maximum = (y*this.image.length) + x; 
-//				stack.push(new IntTupel(y, x));
-//
-//				IntTupel current;
-//				while ( ! stack.isEmpty() ) {
-//					current = stack.pop(); 
-//					if (doneMarker[current.y][current.x] == false) {
-//						foundList.add(current);
-//
-//						maximum = this.checkForSameArea(current.y-1, current.x, value, stack, maximum); 
-//						maximum = this.checkForSameArea(current.y, current.x-1, value, stack, maximum); 
-//						maximum = this.checkForSameArea(current.y, current.x+1, value, stack, maximum); 
-//						maximum = this.checkForSameArea(current.y+1, current.x, value, stack, maximum); 
-//
-//						doneMarker[current.y][current.x] = true;
-//
-//					}
-//					
-//				}
-//
-//				// kopiere an alle stellen aus foundList in label jeweils das maximum
-//				for(IntTupel current2: foundList)
-//				{
-//					label[current2.y][current2.x] = maximum; 
-//				}
-//
-//			}
-//		}
-//
-//	}
-
-	
-	
-	
 	
 	
 	public static class IntTupel {
@@ -201,7 +149,7 @@ public class Worker extends Thread {
 		}
 	}
 	
-	public void checkForSameArea(int y, int x, int value, int areaValueForLabel, Stack<IntTupel> stack)
+	public void checkForSameArea(int y, int x, int valueToCompare, int areaValueForLabel, Stack<IntTupel> stack)
 	{
 		if(y >= image.length || y < 0)
 			return; 
@@ -209,7 +157,7 @@ public class Worker extends Thread {
 		else if(x >= image[y].length || x < 0)
 			return; 
 		
-		else if(image[y][x] != value)
+		else if(image[y][x] != valueToCompare)
 			return; 
 
 		else
