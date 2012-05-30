@@ -6,6 +6,40 @@ import java.util.Stack;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
+/*
+ * 
+ * w = #worker
+ * beginne von rechts unten an und wähle w felder mit verschiedenen farbwerten aus
+ *   weise jedem worker ein startfeld (die koordinaten) zu
+ *    jeder worker findet und markiert alle felder aus dem gebiet, in welchem sein startfeld liegt, 
+ *    und setzt für jedes dieser felder den labelwert auf den positionwert seines startfeldes
+ *   
+ *   barrier1.await
+ *   
+ *   wenn keine felder != -1 mehr vorhanden sind:
+ *    setze terminated = true
+ *    
+ *   barrier2.await
+ *      
+ *   
+ *   
+ *   
+ *   
+ *   
+ *   worker: 
+ *    
+ *    while(terminated == false)
+ *      arbeiten
+ *      
+ *      barrier1.await
+ *      
+ *      barrier2.await
+ * 
+ * 
+ * 
+ * 
+ */
+
 public class Worker extends Thread {
 
 	String name;
