@@ -22,7 +22,12 @@ public class YourCode {
 			return;
 		}
 
-		Framework.processLabeling(args[0], args[1], new MyLabeler());
+//		Framework.processLabeling(args[0], args[1], new MyLabeler());
+//		${workspace_loc}"/alp4_aufg20/pics/Spiral.png"
+//		${workspace_loc}"/alp4_aufg20/pics/Spiral.label.png"
+	//debug
+		String workspace = "C:/Users/tim/Desktop/git/alp4_sose12_programmieruebungen";
+		Framework.processLabeling(workspace+"/alp4_aufg20/pics/8.png",workspace+"/alp4_aufg20/pics/test.label.png", new MyLabeler());
 	}
 
 	private static class MyLabeler implements ILabeler {
@@ -39,36 +44,42 @@ public class YourCode {
 		}
 		
 		@Override
-		public void process(int[][] image, int[][] label) {
+		public void process(int[][] image, int[][] label) throws InterruptedException, BrokenBarrierException {
 
-//			int[][] image = {
-//	    			{4,4,4,4,3,3}, 
-//	    			{1,4,3,4,2,5}, 
-//	    			{1,5,2,2,2,4}, 
-//	    			{4,4,4,5,2,4}, 
-//	    			{5,5,4,4,4,4}, 
-//	    			{5,4,4,3,3,3}, 
-//	    			}; 
-//
+			//zum testen
+			int[][] imageTest = {
+	    			{4,4,4,4,3,3}, 
+	    			{1,4,3,4,2,5}, 
+	    			{1,5,2,2,2,4}, 
+	    			{4,4,4,5,2,4}, 
+	    			{5,5,4,4,4,4}, 
+	    			{5,4,4,3,3,3}, 
+	    			}; 
+			
+//			image = imageTest;
+			
 ////	    	int[][] image = {	
 ////			{3,3,4}, 
 ////			{5,1,2}, 
 ////			{1,1,2}, 
 ////			}; 
-//			
-//	    	int n = image.length; 
-//	    	int[][] label = new int[n][n]; 
-//	    	
-
-//	    	System.out.println("Image: ");
-//	    	printArray(image); 
+			
+	    	int n = image.length; 
+	    	label = new int[n][n]; 
 	    	
+	    	System.out.println("array: "+image[0].length+"*"+image.length );
 	    	
+	    	//debug
+	    	System.out.println("Image: ");
+	    	printArray(image); 
+	    	
+	    	System.out.println("start Labeling ");
 	    	
 			
 			long startTime = System.currentTimeMillis();
 
-			int numberOfWorkers = 2;
+//			int numberOfWorkers = 2;
+			int numberOfWorkers = 1;
 
 			int[] foundYStartPositions = new int[numberOfWorkers];
 			int[] foundXStartPositions = new int[numberOfWorkers];
@@ -88,16 +99,15 @@ public class YourCode {
 				worker.start(); 
 			}
 			
+			
 
 			int counter = 0; 
-			try {
-
 				while (terminatedFlagWrapper.terminated == false) {
 					int foundStartPositionForThreadNumber = 0;
 
 					for (int y = image.length - 1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--) {
 						for (int x = image[0].length - 1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--) {
-							
+		
 							counter++; 
 							
 //							System.out.println();
@@ -112,6 +122,8 @@ public class YourCode {
 //					    	printArray(label); 
 							
 							int value = image[y][x];
+							
+//							System.out.println("work on Pixel: "+counter+" with value "+value );
 
 //							if (value == -1)
 //								continue;
@@ -196,27 +208,11 @@ public class YourCode {
 //						}
 //					}
 //				}
-//		    	
-//		    	
-//		    	
-//				
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (BrokenBarrierException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
 			
 
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (BrokenBarrierException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+			System.out.println("Number of Pixel: "+image[0].length*image.length );
+			
 			long endTime = System.currentTimeMillis();
 
 			long totalTime = endTime - startTime;
@@ -224,14 +220,12 @@ public class YourCode {
 			System.out
 					.println("Time for " + numberOfWorkers + ": " + totalTime);
 			
-			
-
-//	    	System.out.println("Image after: ");
-//	    	printArray(image); 
-//	    	
-//
-//	    	System.out.println("Label: ");
-//	    	printArray(label); 
+			//debug
+			System.out.println("Labeling finished");
+	    	System.out.println("Image after: ");
+	    	printArray(image); 
+	    	System.out.println("labeledArray: ");
+	    	printArray(label); 
 	    	
 
 		}
@@ -239,11 +233,11 @@ public class YourCode {
 
 	    public static void printArray(int[][] arr)
 	    {
-	    	int n = arr.length; 
+//	    	int n = arr.length; 
 	    	
-	    	for(int y = 0; y < n; y++)
+	    	for(int y = 0; y < arr.length; y++)
 	    	{
-	    		for(int x = 0; x < n; x++)
+	    		for(int x = 0; x < arr[0].length; x++)
 	    		{
 	    			System.out.print(arr[y][x] + " ");
 	    		}
