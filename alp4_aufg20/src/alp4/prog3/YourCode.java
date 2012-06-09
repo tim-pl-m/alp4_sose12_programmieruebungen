@@ -26,7 +26,10 @@ public class YourCode {
 		// ${workspace_loc}"/alp4_aufg20/pics/Spiral.label.png"
 		// debug
 		String workspace = "C:/Users/tim/Desktop/git/alp4_sose12_programmieruebungen";
-		Framework.processLabeling(workspace + "/alp4_aufg20/pics/8.png", workspace + "/alp4_aufg20/pics/test.label.png", new MyLabeler());
+//		String bild ="8";
+		String bild ="rsmall";
+//		String bild ="Raptor_01";
+		Framework.processLabeling(workspace + "/alp4_aufg20/pics/"+bild+".png", workspace + "/alp4_aufg20/pics/test.label.png", new MyLabeler());
 	}
 
 	private static class MyLabeler implements ILabeler {
@@ -46,7 +49,7 @@ public class YourCode {
 			// zum testen
 			int[][] imageTest = { { 4, 4, 4, 4, 3, 3 }, { 1, 4, 3, 4, 2, 5 }, { 1, 5, 2, 2, 2, 4 }, { 4, 4, 4, 5, 2, 4 }, { 5, 5, 4, 4, 4, 4 }, { 5, 4, 4, 3, 3, 3 }, };
 
-			image = imageTest;
+//			image = imageTest;
 
 			// // int[][] image = {
 			// // {3,3,4},
@@ -79,28 +82,30 @@ public class YourCode {
 			CyclicBarrier barrier1 = new CyclicBarrier(numberOfWorkers + 1);
 			CyclicBarrier barrier2 = new CyclicBarrier(numberOfWorkers + 1);
 
-			YStartPositions[0] = 1;
-			XStartPositions[0] = 1;
-			StartValues[0] = 1;
+			// YStartPositions[0] = image.length-1;
+			// XStartPositions[0] = image[0].length-1;
+			// StartValues[0] = image.length-1*image[0].length;
 
 			// worker anlegen
 			for (int i = 0; i < numberOfWorkers; i++) {
 				Worker worker = new Worker(i, image, label, YStartPositions, XStartPositions, StartValues, terminatedFlagWrapper, barrier1, barrier2);
 				worker.start();
 			}
-			
-			int counter = 0;
-			while (terminatedFlagWrapper.terminated == false) {
-				int StartPosition= 0;
-				if (StartPosition == 0)
-					terminatedFlagWrapper.terminated = true;
-				
-				barrier1.await();
 
-				barrier2.await();
-				
+			schleifen(image, numberOfWorkers, YStartPositions, XStartPositions, StartValues, terminatedFlagWrapper, barrier1, barrier2);
 
-			}
+			// int counter = 0;
+			// while (terminatedFlagWrapper.terminated == false) {
+			// int StartPosition= 0;
+			//
+			// barrier1.await();
+			//
+			// barrier2.await();
+			// if (StartPosition == 0)
+			// terminatedFlagWrapper.terminated = true;
+			//
+			//
+			// }
 
 			System.out.println("Number of Pixel: " + image[0].length * image.length);
 
