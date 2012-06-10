@@ -59,7 +59,7 @@ public class Framework {
 			
 			// apply labeling...
 			labeler.process(image, label);
-			
+//			label=image;
 			// hacky greedy algorithm for minimal graph coloring
 			HashMap<Integer,Integer> distinct = new HashMap<Integer,Integer>();
 			for(int x = 0, i = 0; x < img.getWidth(); x++){

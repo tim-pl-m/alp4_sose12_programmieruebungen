@@ -81,6 +81,7 @@ public class Worker extends Thread {
 
 	private void barrier() throws InterruptedException, BrokenBarrierException {
 		while (true) {
+			System.out.println("worker: "+this.workerId);
 			this.barrier1.await();
 
 			if (this.terminatedFlagWrapper.terminated == true) {

@@ -25,9 +25,9 @@ public class YourCode {
 		// ${workspace_loc}"/alp4_aufg20/pics/Spiral.png"
 		// ${workspace_loc}"/alp4_aufg20/pics/Spiral.label.png"
 		// debug
-		String workspace = "C:/Users/tim/Desktop/git/alp4_sose12_programmieruebungen";
-//		String bild ="8";
-		String bild ="rsmall";
+		String workspace = "C:/Users/tim/Desktop/alp4/alp4_sose12_programmieruebungen";
+		String bild ="8";
+//		String bild ="rsmall";
 //		String bild ="Raptor_01";
 		Framework.processLabeling(workspace + "/alp4_aufg20/pics/"+bild+".png", workspace + "/alp4_aufg20/pics/test.label.png", new MyLabeler());
 	}
@@ -42,7 +42,10 @@ public class YourCode {
 
 			return false;
 		}
-
+//		@Override
+//		public void process(int[][] image, int[][] label) {
+//			label=image;
+//		}
 		@Override
 		public void process(int[][] image, int[][] label) throws InterruptedException, BrokenBarrierException {
 
@@ -58,21 +61,22 @@ public class YourCode {
 			// // };
 
 			int n = image.length;
-			label = new int[n][n];
+//			label = new int[n][n];
 
 			System.out.println("array: " + image[0].length + "*" + image.length);
 
 			// debug
 			System.out.println("Image: ");
-			printArray(image);
+//			printArray(image);
 
 			System.out.println("start Labeling ");
 
 			long startTime = System.currentTimeMillis();
 
 			// int numberOfWorkers = 2;
-			int numberOfWorkers = 1;
+			int numberOfWorkers = 10;
 
+			//matrix
 			int[] YStartPositions = new int[numberOfWorkers];
 			int[] XStartPositions = new int[numberOfWorkers];
 			int[] StartValues = new int[numberOfWorkers];
@@ -118,21 +122,21 @@ public class YourCode {
 			// debug
 			System.out.println("Labeling finished");
 			System.out.println("Image after: ");
-			printArray(image);
+//			printArray(image);
 			System.out.println("labeledArray: ");
-			printArray(label);
+//			printArray(label);
 
 		}
 
-		private void schleifen(int[][] image, int numberOfWorkers, int[] YStartPositions, int[] XStartPositions, int[] StartValues, TerminatedFlagWrapper terminatedFlagWrapper,
+		private void schleifen(int[][] image, int numberOfWorkers, int[] YStartPositions, int[] XStartPositions, int[] StartValues, TerminatedFlagWrapper done,
 				CyclicBarrier barrier1, CyclicBarrier barrier2) throws InterruptedException, BrokenBarrierException {
 
 			int counter = 0;
-			while (terminatedFlagWrapper.terminated == false) {
-				int foundStartPositionForThreadNumber = 0;
+			while (done.terminated == false) {
+				int assignedWorkers = 0;
 
-				for (int y = image.length - 1; y >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; y--) {
-					for (int x = image[0].length - 1; x >= 0 && foundStartPositionForThreadNumber < numberOfWorkers; x--) {
+				for (int y = image.length - 1; y >= 0 && assignedWorkers < numberOfWorkers; y--) {
+					for (int x = image[0].length - 1; x >= 0 && assignedWorkers < numberOfWorkers; x--) {
 
 						counter++;
 
@@ -157,11 +161,11 @@ public class YourCode {
 						// continue;
 
 						if (value != -1 && !isValueIn(value, StartValues)) {
-							YStartPositions[foundStartPositionForThreadNumber] = y;
-							XStartPositions[foundStartPositionForThreadNumber] = x;
-							StartValues[foundStartPositionForThreadNumber] = value;
+							YStartPositions[assignedWorkers] = y;
+							XStartPositions[assignedWorkers] = x;
+							StartValues[assignedWorkers] = value;
 
-							foundStartPositionForThreadNumber++;
+							assignedWorkers++;
 						}
 
 					}
@@ -177,8 +181,8 @@ public class YourCode {
 				// }
 				// }
 
-				if (foundStartPositionForThreadNumber == 0)
-					terminatedFlagWrapper.terminated = true;
+				if (assignedWorkers == 0)
+					done.terminated = true;
 
 				barrier1.await();
 
